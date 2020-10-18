@@ -98,14 +98,14 @@ DATABASES = {
     
     # }
 
-    #     'default': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': 'wbvjvqcl',
-    #     'HOST' : 'rajje.db.elephantsql.com',
-    #     'USER' : 'wbvjvqcl',
-    #     'PASSWORD' : '2_Zu8QIf5W40PCVUK_r6oVCSzGaEygIo',
-    #     'PORT': '5432',
-    # }
+        'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'wbvjvqcl',
+        'HOST' : 'rajje.db.elephantsql.com',
+        'USER' : 'wbvjvqcl',
+        'PASSWORD' : '2_Zu8QIf5W40PCVUK_r6oVCSzGaEygIo',
+        'PORT': '5432',
+    }
 }
 
 import dj_database_url

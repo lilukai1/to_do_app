@@ -25,7 +25,7 @@ class Task(models.Model):
     title = models.CharField(max_length=100)
     completed = models.BooleanField(default=False)
     person = models.ForeignKey(get_user_model(), on_delete=models.CASCADE,)
-    time_began = models.DateTimeField(auto_now_add=True)
+    time_began = models.DateTimeField(default=datetime.now())
     time_ended = models.DateTimeField(null=True, blank=True)
     priority = models.IntegerField(default=5)
     relationships = models.ManyToManyField('self', symmetrical=False, through='TaskRelationship', related_name='related_to')
