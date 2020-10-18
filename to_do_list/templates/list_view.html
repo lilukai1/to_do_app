@@ -1,0 +1,59 @@
+{% extends "base_view.html" %}
+<br>
+{% block content %}
+<br><br>
+<div class "container is-flex">
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Task</th>
+                <th>Started On</th>
+                <th>Finished On</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in task_list %}
+            {% if user == item.person %}
+            <tr>
+                <td>
+                {% if item.completed %}
+                <a class="button is-white"  input type ="submit" href='{% url "toggle_checkmark" item.id %}' pk = {{item.id}}>
+                    <span class="icon has-text-success">
+                        <i class="fas fa-check-square"></i>
+                    </span>
+                </a>
+                {% else %}
+                <a class="button is-white"  input type ="submit" href='{% url "toggle_checkmark" item.id %}' pk = {{item.id}}>
+                    <span class="icon has-text-danger">
+                        <i class="fas fa-ban"></i>
+                    </span>
+                </a>
+                {%endif%}
+            </td>
+            
+            <td>{{forloop.counter}}. <a href='{% url "task_item" item.id %}' pk = {{item.id}}> {{ item.title }}</a></td>
+            <td>{{ item.time_began}}</td>
+            <td>{{ item.time_ended}}</td>
+            <td>
+                <a class="button is-success"  value="Edit Task" href='{% url "edit_task" item.id %}' pk = {{item.id}}>Edit Task</a>
+            </td>
+            <td>
+                <a class="button is-warning"  value="Delete Task" href='{% url "delete_task" item.id %}' pk = {{item.id}}>Delete Task</a>
+            </td>
+            
+        </tr>
+        
+        {% elif user.is_admin %}
+        
+        <tr><td>{{forloop.counter}}. <a href='{% url "task_item" item.id %}' pk = {{item.id}}> {{ item.title }}</a></td>
+            <td>{{ item.time_began}} </td>
+        </tr>
+        <br>
+        {% endif %}
+        {% endfor %}
+    </p>
+    {%endblock content %}
+    

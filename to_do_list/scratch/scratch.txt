@@ -1,0 +1,104 @@
+    it was completed on {{ item.time_ended }}
+    {%endif %}}
+
+
+
+
+    def task_edit(request, pk=None):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == "POST":
+        form = PostForm(request.POST,
+                        instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('post_create')
+    else:
+        form = PostForm(instance=post)
+
+    return render(request,
+                  'blog/post_edit.html',
+                  {
+                      'form': form,
+                      'post': post
+                  })
+
+
+
+
+
+{% extends "base_view.html" %}
+<br>
+{% block content %}
+
+
+
+{% end content %}
+
+
+
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  Hi {{ user.username }}!
+  <p><a href="{% url 'logout' %}">Log Out</a></p>
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">Log In</a>
+{% endif %}
+{% endblock %}
+
+
+
+
+class SignUpView(generic.CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy('login')
+    template_name = 'registration/signup.html'
+
+
+
+    <WSGIRequest: GET '/test/'>
+[14/Oct/2020 23:10:22] "GET /test/ HTTP/1.1" 200 14689
+<WSGIRequest: POST '/test/'>
+<QueryDict: {'csrfmiddlewaretoken': ['TLLDm0f3lGMU2OEu1h7YYsPiZJ05W7Jwh7oK8h5hAXbxVnLNjNWH7N9usF5HUjfR'], 'title': ['making formset'], 'time_began': ['2020-10-14 23:10:17'], 'priority': ['5'], 'current_task-TOTAL_FORMS': ['1'], 'current_task-INITIAL_FORMS': ['0'], 'current_task-MIN_NUM_FORMS': ['0'], 'current_task-MAX_NUM_FORMS': ['1000'], 'current_task-0-target_task': ['23'], 'current_task-0-relationship_status': ['child'], 'current_task-0-id': [''], 'current_task-0-current_task': ['']}>
+Internal Server Error: /test/
+
+
+
+       context['editing_relationships'] = editing_task.get_relationships()
+        success_msg = "Task has been edited!"
+        context['edit_context'] = editing_task.get_context()
+        context['after_task'] = editing_task.get_relationships("after_task")
+        context['before_task'] = editing_task.get_relationships("before_task")
+
+
+
+
+
+
+
+
+
+        
+<div class = "box">
+    <form action = "" method = "post"> 
+        {% csrf_token %} 
+        <div class= "columns">
+            <div class = "column">
+                {{ add_task_form.as_p }} 
+            </div>
+            <div class = "column">
+                {{ relationship_form.as_p }}
+            </div>
+        </div>
+        <input class="button is-primary" input type="submit" value="Submit"> 
+    </form> 
+</div>
+
+
+
+
+
+

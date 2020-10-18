@@ -1,0 +1,16 @@
+{% extends "base_view.html" %}
+
+
+{% block content %}
+<br><br>
+{% for item in mass_edit %}
+
+{% include "edit_snippet/item.id" %}
+
+{% endfor %}
+
+{%endblock content %}
+
+
+
+

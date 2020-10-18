@@ -1,0 +1,18 @@
+{% extends "base_view.html" %}
+<br><br>
+
+{% block content %}
+<center>
+<class= "box">
+    <form action ="" form method="post">
+        {% csrf_token %} 
+        <p>Are you sure you want to delete "{{ object }}"?</p> 
+        <input class="button is-primary" type="submit" value="Confirm"> 
+    </form> 
+</class>
+</center>
+{%endblock content %}
+
+
+
+

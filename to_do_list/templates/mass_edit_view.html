@@ -1,0 +1,16 @@
+{% extends "base_view.html" %}
+
+
+{% block content %}
+<br><br>
+{% for item in mass_edit %}
+
+{{forloop.counter}}.  <a href='{% url "edit_task" item.id %}' pk = {{item.id}}> {{ item.title }}</a> was started on {{ item.time_began}}.
+<br>
+{% endfor %}
+
+{%endblock content %}
+
+
+
+

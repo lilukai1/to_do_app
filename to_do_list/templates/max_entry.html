@@ -1,0 +1,22 @@
+{% extends "base_view.html" %}
+<br>
+{% block content %}
+<br>
+
+{{ item.title }}</a> was started on {{ item.time_began }}<br>
+<br>
+Relationships:
+{{ item.relationships }}
+<br>
+<br>
+
+<form action = "" method = "post"> 
+    {% csrf_token %} 
+    {{ add_task_form.as_p }} 
+    {{ relationship_form.as_p }}
+    <input class="button is-primary" input type="submit" value="Submit"> 
+</form> 
+
+
+{%endblock content %}
+

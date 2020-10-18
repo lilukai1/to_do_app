@@ -1,0 +1,87 @@
+
+{% block content %}
+<br>
+<section class = "add_task">
+    <div class ="container">
+        {% if editing_task != "" %}
+        <div class = "box">
+            <h2 class="title is-2">"{{ editing_task.title }}"</h2> <br>
+            <h2 class="subtitle is-3">Started on: {{ editing_task.time_began }}</h2>
+            {% if editing_task.time_ended != None %}
+            <h2 class="subtitle is-3 pulled-right"> Finished on {{editing_task.time_ended}}</h2>
+            <br>
+            {% endif %}
+
+
+            {% if editing_relationships == "" %}
+            <section class = "section">
+                <p> No relationships to other tasks.</p>
+            </section>
+            {% else %}
+            <section class = "section">
+                <div class="columns">
+                    <div class="column is-half"">
+                        <div class = "box">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>These need done before this task can be completed:</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for parent in editing_task.get_parents%} 
+                                    {% if parent.completed != True%} 
+                                    <td><a  href='{% url  "task_item" item.id %}'>{{ parent.title }}</a> </td>
+                                    <br>
+                                    {% endif %}
+                                    {% endfor %}
+                                </tbody>
+                                </table
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class = "box">
+                            
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>These can be done when this task is completed:</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for child in editing_task.get_children%} 
+                                    {% if child.completed != True%}
+                                    <td>  <a  href='{% url  "task_item" item.id %}'>{{child.title}}</a> </td> 
+                                    <br>
+                                    {% endif %}
+                                    {%endfor%}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endif %}
+            </div>
+        </div>
+        <div class = "box">
+            <form action = "" method = "post"> 
+                {% csrf_token %} 
+                <div class= "columns">
+                    <div class = "column">
+                        {{ add_task_form.as_p }} 
+                    </div>
+                    <div class = "column">
+                        {{ relationship_form.as_p }}
+                    </div>
+                </div>
+                <input class="button is-primary" input type="submit" value="Submit"> 
+            </form> 
+        </div>
+    </div>
+</div>
+</section>
+
+{%endblock content %}
+

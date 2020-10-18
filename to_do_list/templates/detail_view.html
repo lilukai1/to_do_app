@@ -1,0 +1,83 @@
+{% extends "base_view.html" %}
+
+{% block content %}
+
+<section class = "add_task">
+  <div class ="container">
+      <div class = "box">
+          <h3 class="title is-3">"{{ task.title }}"</h3> <br>
+          <h4 class="subtitle is-4">Started on: {{ task.time_began }}</h4>
+          {% if task.time_ended != None %}
+          <h4 class="subtitle is-4 pulled-right"> Finished on {{task.time_ended}}</h4>
+          <br>
+          {% endif %}
+          
+          
+          {% if editing_relationships %}
+
+          <section class = "section">
+              <div class="columns">
+                  <div class="column is-half">
+                      <div class = "box">
+                          <table class="table">
+                              <thead>
+                                  <tr>
+                                      <th>These need done before this task can be completed:</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  {% for task in before_tasks %} 
+                                  {% if task.completed != True %} 
+                                  <td><a  href='{% url  "task_item" task.target_task_id %}'>{{ task.target_task }}</a> </td>
+                                  <br>
+                                  {% endif %}
+                                  {% endfor %}
+                              </tbody>
+                              </table
+                          </div>
+                      </div>
+                  </div>
+                  <div class="column">
+                      <div class = "box">
+                          <table class="table">
+                              <thead>
+                                  <tr>
+                                      <th>These can be done when this task is completed:</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  {% for task in after_tasks %} 
+                                  <tr>
+                                      <td>                      
+                                          {% if task.current_task %}
+                                          <span class="icon has-text-success">
+                                              <i class="fas fa-check-square"></i>
+                                          </span>
+                                          {% else %}
+                                          <span class="icon has-text-danger">
+                                              <i class="fas fa-ban"></i>
+                                          </span>
+                                      </td>
+                                      {%endif%}
+                                      <td> <a  href='{% url  "task_item" task.target_task_id %}'>{{task.target_task}}</a> </td> 
+                                      <br>
+                                  </tr>
+                                  {%endfor%}
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+              {% else %}
+
+              <section class = "section">
+                  <p> No relationships to other tasks.</p>
+              </section>
+              {% endif %}
+          </div>
+
+{%endblock content %}
+  
+  
+  
+  
