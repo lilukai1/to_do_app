@@ -1,6 +1,8 @@
 from django.db import models
 from django.db.models import Q
 from datetime import datetime
+from django.utils import timezone
+
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.urls import reverse
@@ -19,13 +21,13 @@ def opposite_status(status):
         opposite_status=RELATIONSHIP_AFTER_TASK
     return opposite_status
 
-
+#default=timezone.localtime(timezone.now())
 
 class Task(models.Model):
     title = models.CharField(max_length=100)
     completed = models.BooleanField(default=False)
     person = models.ForeignKey(get_user_model(), on_delete=models.CASCADE,)
-    time_began = models.DateTimeField(default=datetime.now())
+    time_began = models.DateTimeField(default=timezone.now)
     time_ended = models.DateTimeField(null=True, blank=True)
     priority = models.IntegerField(default=5)
     relationships = models.ManyToManyField('self', symmetrical=False, through='TaskRelationship', related_name='related_to')
