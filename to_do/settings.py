@@ -23,10 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '#_#81uk#^(q6(jfw!qidro*+mg#(d^lr)v1_zwf6s-$arbpvyt'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
      'polar-atoll-29761.herokuapp.com',
+     '127.0.0.1',
+     'localhost',
 ]
 
 

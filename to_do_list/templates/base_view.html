@@ -9,92 +9,113 @@
     <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
 </head>
 
-    <nav class="navbar is-light" role="navigation" aria-label="main navigation" >
-        <div class="navbar-brand">
-            <a class="navbar-item" href="{% url 'list_view' %}">
-                <img src={% static 'img/logo.png' %} width="50" height="1000">
-            </a>
-            
-            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
-        </div>
+<nav class="navbar is-light" role="navigation" aria-label="main navigation" >
+    <div class="navbar-brand">
+        <a class="navbar-item" href="{% url 'list_view' %}">
+            <img src={% static 'img/logo.png' %} width="50" height="1000">
+        </a>
         
-        <div id="navbarBasicExample" class="navbar-menu">
-            <div class="navbar-start">
-                <div class="navbar-item">
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true">
+                <a class="navbar-item" href="{% url 'list_view' %}">Task List</a>
+            </span>
+            <span aria-hidden="true">                
+                <a class="navbar-item" href="{% url 'add_task' %}">Add Task</a>
+            </span>
+            <span aria-hidden="true"> 
+                {% if user.is_authenticated %}
+                <div class="buttons">                       
+                    <a class="button is-dark" href='{% url "logout" %}'>
+                        Log out 
+                    </a>
+                    {% else %}
+                </div>
+                <div class="navbar-end">                       
+                    <a class="button is-primary" href="{% url 'login' %}" >
+                        Log In
+                    </a>
+                    <a class="button is-primary" href = "{% url 'signup'%}">
+                        Sign up
+                    </a>
+                    {% endif %}
+                </div>
+            </span>
+        </a>
+    </div>
+    
+    <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+            <div class="navbar-item">
                 {% if user.is_authenticated %}
                 <p> Hi, {{user}}</p>
             </div>
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link" href ='{% url "list_view" %}'> 
-                        Tasks
-                    </a>   
-                    <div class="navbar-dropdown">
-                        {% for item in all_tasks %}
-                        {% if not item.completed %}
-                        <a class="navbar-item" href='{% url "task_item" item.id %}'>
-                            {{ forloop.counter }}. {{ item.title }}
-                        </a>
-                        {%endif%}
-                        {% endfor %}
-                    </div>
-                </div>      
-                <a class="navbar-item" href="{% url 'add_task' %}">
-                    Add a Task
-                </a>
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link" href ='{% url "mass_edit_view" %}'>
-                        Edit Tasks
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link" href ='{% url "list_view" %}'> 
+                    Tasks
+                </a>   
+                <div class="navbar-dropdown">
+                    {% for item in all_tasks %}
+                    {% if not item.completed %}
+                    <a class="navbar-item" href='{% url "task_item" item.id %}'>
+                        {{ forloop.counter }}. {{ item.title }}
                     </a>
-                    <div class="navbar-dropdown">
-                        {% for item in all_tasks %}
-                        {% if not item.completed %}
-                        <a class="navbar-item" href='{% url  "edit_task" item.id %}' pk={{ item.id }}>{{ forloop.counter }}. {{ item.title }}</a>
-                        {%endif%}
-                        {% endfor %}
-                    </div>
+                    {%endif%}
+                    {% endfor %}
+                </div>
+            </div>      
+            <a class="navbar-item" href="{% url 'add_task' %}">
+                Add a Task
+            </a>
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link" href ='{% url "mass_edit_view" %}'>
+                    Edit Tasks
+                </a>
+                <div class="navbar-dropdown">
+                    {% for item in all_tasks %}
+                    {% if not item.completed %}
+                    <a class="navbar-item" href='{% url  "edit_task" item.id %}' pk={{ item.id }}>{{ forloop.counter }}. {{ item.title }}</a>
+                    {%endif%}
+                    {% endfor %}
                 </div>
             </div>
-            
-            <div class="navbar-end">
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link" href ='{% url "list_view" %}'> 
-                        Delete Task
-                    </a>   
-                    <div class="navbar-dropdown">
-                        {% for item in all_tasks %}
-                        {% if not item.completed %}
-                        <a class="navbar-item" href='{% url "delete_task" item.id %}'>
-                            {{ forloop.counter }}. {{ item.title }}
-                        </a>
-                        {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>      
-                <div class="navbar-item">
-                    <div class="buttons">
-                        
-                        <a class="button is-dark" href='{% url "logout" %}'>
-                            Log out 
-                        </a>
-                        {% else %}
-                    </div>
-                    <div class="navbar-end">                       
-                        <a class="button is-primary" href="{% url 'login' %}" >
-                            Log In
-                        </a>
-                        <a class="button is-primary" href = "{% url 'signup'%}">
-                            Sign up
-                        </a>
-                        {% endif %}
-                    </div>
+        </div>
+        
+        <div class="navbar-end">
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link" href ='{% url "list_view" %}'> 
+                    Delete Task
+                </a>   
+                <div class="navbar-dropdown">
+                    {% for item in all_tasks %}
+                    {% if not item.completed %}
+                    <a class="navbar-item" href='{% url "delete_task" item.id %}'>
+                        {{ forloop.counter }}. {{ item.title }}
+                    </a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>      
+            <div class="navbar-item">
+                <div class="buttons">
+                    
+                    <a class="button is-dark" href='{% url "logout" %}'>
+                        Log out 
+                    </a>
+                    {% else %}
+                </div>
+                <div class="navbar-end">                       
+                    <a class="button is-primary" href="{% url 'login' %}" >
+                        Log In
+                    </a>
+                    <a class="button is-primary" href = "{% url 'signup'%}">
+                        Sign up
+                    </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
+</div>
 </nav>
 
 <div class = "container">
