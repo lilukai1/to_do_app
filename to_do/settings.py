@@ -87,16 +87,16 @@ WSGI_APPLICATION = 'to_do.wsgi.application'
 
 DATABASES = {
 
-    'default' : {
-    'ENGINE': 'django.db.backends.postgresql',
-    'HOST': 'ec2-107-20-104-234.compute-1.amazonaws.com'
-    'DATABASE':'dd2eu7l7pf51pa'
-    'USER': 'xtatteraczujgg'
-    'PORT': '5432'
-    'PASSWORD': '57b8a3bdc55d2471a58dcfa775782a47ef6d2d002ff8f994cd0fff521e8065a5'
-    'URI': 'postgres://xtatteraczujgg:57b8a3bdc55d2471a58dcfa775782a47ef6d2d002ff8f994cd0fff521e8065a5@ec2-107-20-104-234.compute-1.amazonaws.com:5432/dd2eu7l7pf51pa'
+    # 'default' : {
+    # 'ENGINE': 'django.db.backends.postgresql',
+    # 'HOST': 'ec2-107-20-104-234.compute-1.amazonaws.com'
+    # 'DATABASE':'dd2eu7l7pf51pa'
+    # 'USER': 'xtatteraczujgg'
+    # 'PORT': '5432'
+    # 'PASSWORD': '57b8a3bdc55d2471a58dcfa775782a47ef6d2d002ff8f994cd0fff521e8065a5'
+    # 'URI': 'postgres://xtatteraczujgg:57b8a3bdc55d2471a58dcfa775782a47ef6d2d002ff8f994cd0fff521e8065a5@ec2-107-20-104-234.compute-1.amazonaws.com:5432/dd2eu7l7pf51pa'
     
-    }
+    # }
 
     #     'default': {
     #     'ENGINE': 'django.db.backends.postgresql',
@@ -108,6 +108,9 @@ DATABASES = {
     # }
 }
 
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
