@@ -1,0 +1,15 @@
+                <a class="navbar-item" href="{% url 'list_view' %}">Task List</a>
+                <a class="navbar-item" href="{% url 'add_task' %}">Add Task</a>
+                {% if user.is_authenticated %}
+                <div class="buttons">                       
+                    <a class="button is-dark" href='{% url "logout" %}'>
+                        Log out 
+                    </a>
+                    {% else %}                     
+                    <a class="button is-primary" href="{% url 'login' %}" >
+                        Log In
+                    </a>
+                    <a class="button is-primary" href = "{% url 'signup'%}">
+                        Sign up
+                    </a>
+                    {% endif %}

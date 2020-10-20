@@ -11,22 +11,26 @@ from django.http import HttpResponseRedirect
 
 User = get_user_model()
 
-def add_task_view(request):
-    return render(request, 'base_view.html')
-
 def base_view(request):
     return render(request, 'base_view.html') 
-
-def view_task_detail(request):
-    return render(request, 'base_view.html')
-
 class AllTasksList(ListView):
     model = Task
     context_object_name = 'task_list'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["page_title"] = f"All Tasks"
+        return context
+
 class DetailTaskView(DetailView):
     model = Task
     context_object_name = 'task'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["page_title"] = f"{kwargs['object'].title} Detail"
+        return context
+
 
 class TaskEntryView(SuccessMessageMixin, CreateView):
     model=Task
@@ -42,21 +46,17 @@ class TaskEntryView(SuccessMessageMixin, CreateView):
     def get_success_message(self, cleaned_data):
         return "Task created!"
 
-
-class TaskEditView(SuccessMessageMixin, UpdateView):
-    model=Task
-    form_class= EditTask
-    context_object_name='edit_task'
-    
-    def get_success_message(self, cleaned_data):
-        return "Task Edited Successfully"
-
 class RelationshipEditView(SuccessMessageMixin, CreateView):
     model=TaskRelationship
     form_class= RelationshipForm
     context_object_name='edit_task_relationship'
     success_url= '/'
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["page_title"] = f"Editing {kwargs['object'].title} Relationships"
+        return context
+
     def get_success_message(self, cleaned_data):
         return "Task Edited Successfully"
 
@@ -67,14 +67,6 @@ class TaskDeleteView(SuccessMessageMixin, DeleteView):
     def get_success_message(self, cleaned_data):
         return "Task Deleted."
 
-class TaskEditAllView(UpdateView):
-    model=Task
-    form_class= EditTask
-    context_object_name='edit_task'
-
-class MassEditView(ListView):
-    model = Task
-    context_object_name = 'mass_edit'
 
 def toggle_checkmark(request, pk):
     task = get_object_or_404(Task, pk=pk)    
@@ -83,21 +75,9 @@ def toggle_checkmark(request, pk):
         task.time_ended=None
     else:
         task.completed=True
-        task.time_ended=datetime.now()
+        task.time_ended=timezone.now
     task.save()
-    return HttpResponseRedirect("/")
-
-
-
-    # checkbox_value = request.POST["task_complete"]
-    # checkbox_id = int(request.POST["id_of_element"])
-    # task_to_modify = ToDoChecklistTask.objects.get(id = checkbox_id)
-
-    # task_to_modify.task_check_marked = (checkbox_value == "true")
-    # task_to_modify.save()
-
-    # data_to_return = serializers.serialize('json', ToDoChecklistTask.objects.all());
-    # return HttpResponse(data_to_return, 'application/json')
+    return HttpResponseRedirect("/list_view/")
 
 
 def add_task_view(request, pk=None):
@@ -105,18 +85,19 @@ def add_task_view(request, pk=None):
     person = request.user
     RelationshipInlineFormSet = inlineformset_factory(Task, TaskRelationship, 
                             fields=('target_task', 'relationship_status',),
-                            fk_name='current_task', extra=1)
+                            fk_name='current_task', extra=1, formset=RelationshipForm,)
 
     if pk != None:
         editing_task = get_object_or_404(Task, pk=pk)
         success_msg = "Task has been edited!"
         context={
-        
-        'editing_relationships': editing_task.get_relationships(),
-        'editing_task': editing_task.get_context(),
-        'after_task' :editing_task.get_relationships("after_task"),
-        'before_task' : editing_task.get_relationships("before_task"),
+            'editing_relationships': editing_task.get_relationships(),
+            'editing_task': editing_task.get_context(),
+            'after_task' :editing_task.get_relationships("after_task"),
+            'before_task' : editing_task.get_relationships("before_task"),
+            "page_title" : f"Editing: { editing_task.title }"
         }
+
 
     else:
         editing_task = Task(person=person)
@@ -125,8 +106,6 @@ def add_task_view(request, pk=None):
     add_task_form = AddTaskForm(data=request.POST or None, instance=editing_task, person=person)
     post_toasties= request.POST
 
-    print("post toasties", post_toasties)
-    print(request.method)
     if request.method == 'POST':
         rel_form = RelationshipInlineFormSet(data=request.POST)
         if add_task_form.is_valid and rel_form.is_valid:
@@ -143,10 +122,17 @@ def add_task_view(request, pk=None):
     else:
         form_context={
             'add_task_form': add_task_form,
+            # 'relationship_form': RelationshipForm,
             'relationship_form': RelationshipInlineFormSet,
+
+            "page_title" : f"Create New Task"
+
             }
         context.update(form_context)
-        print(context)
-        print(editing_task.title)
         return render(request, 'add_task_view.html', context=context)
 
+def index_view(request):
+    context={            
+        "page_title" : f"Create New Task",
+    }
+    return render(request, 'index_view.html', context)

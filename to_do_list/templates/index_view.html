@@ -1,0 +1,60 @@
+{% extends "base_view.html" %}
+<br>
+{% block content %}
+<br><br>
+<section class = "index">
+    <div class = "container">
+        <center>
+            {% if user.is_authenticated %}
+            <h3 class="title is-3"> Hi, {{user}} </h3><br>
+            {% endif %}
+            <h3 class="title is-3">Thanks for visiting<h3>
+                <br>
+                <h1 class="title is-1">The To Do List!<h1>
+                    <br>
+                </div>
+                <div class="box">
+                    <center>
+                        {% if user.is_authenticated %}
+                        
+                        <div class="buttonsis-centered">
+                            <a class="button is-dark " href='{% url "logout" %}'> Log out </a>
+                        </div>
+                        {% else %}
+                        <div class = "columns">
+                            <div class = "column">
+                                
+                                
+                                Already a member? Sign in to see your to do lists!
+                                <br>                    <br>
+                                <div class="buttons is-centered">
+                                    <a class="button is-primary" href="{% url 'login' %}" >Log In</a>
+                                </div>
+                            </div>
+                            <div class = "column">
+                                Would you like to create awesome to do lists?
+                                <br><br>
+                                <div class="buttons is-centered">
+                                    <a class="button is-primary" href = "{% url 'signup'%}">Sign up</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    {%endblock content %}
+                    

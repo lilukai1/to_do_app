@@ -15,6 +15,39 @@
             <br>
             {% endif %}
             
+<!-- <class section = "relationship editing multiselect">
+    <div class = "box">
+        {% for value, text in form.providers.field.choices %}
+        <div class="ui slider checkbox">
+          <input id="id_providers_{{ forloop.counter0 }}" name="{{ form.providers.name }}" type="checkbox" value="{{ value }}"{% if value in checked_providers %} checked="checked"{% endif %}>
+          <label>{{ text }}</label>
+        </div>
+      {% endfor %}
+
+    </div>
+</class> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             
             {% if editing_relationships %}
 
@@ -95,9 +128,9 @@
                     {% if editing_task %}
                     
                     {% if task.complete %}
-                    <a class="button is-success" href='{% url "toggle_checkmark" editing_task.id %}'>Done</a>
+                    <a class="button is-success" href='{% url "toggle_checkmark" editing_task.id %}'>Mark Not Done</a>
                     {% else %}
-                    <a class="button is-warning" href='{% url "toggle_checkmark" editing_task.id %}'>Not Done</a>
+                    <a class="button is-warning" href='{% url "toggle_checkmark" editing_task.id %}'>Mark Done</a>
                     {% endif %}
                     <a class="button is-danger is-pulled-right" href='{% url "delete_task" editing_task.id %}'>Delete Task</a> 
 

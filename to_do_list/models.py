@@ -7,11 +7,13 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 
+from multiselectfield import MultiSelectField
+
 RELATIONSHIP_AFTER_TASK = 'after_task'
 RELATIONSHIP_BEFORE_TASK = 'before_task'
 RELATIONSHIP_STATUS = [
-    (RELATIONSHIP_AFTER_TASK, 'after_task'),
-    (RELATIONSHIP_BEFORE_TASK, 'before_task')
+    (RELATIONSHIP_AFTER_TASK, 'Current task can be done after '),
+    (RELATIONSHIP_BEFORE_TASK, 'Current task must be done before ')
     ]
 
 def opposite_status(status):
@@ -25,11 +27,12 @@ def opposite_status(status):
 
 class Task(models.Model):
     title = models.CharField(max_length=100)
+    description = models.TextField(default="", blank=True, null = True,)
     completed = models.BooleanField(default=False)
     person = models.ForeignKey(get_user_model(), on_delete=models.CASCADE,)
     time_began = models.DateTimeField(default=timezone.now)
     time_ended = models.DateTimeField(null=True, blank=True)
-    priority = models.IntegerField(default=5)
+    priority = models.IntegerField(default=5, )
     relationships = models.ManyToManyField('self', symmetrical=False, through='TaskRelationship', related_name='related_to')
 
     def __str__(self):
