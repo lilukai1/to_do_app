@@ -8,10 +8,7 @@
     {% if editing_task %}
     <div class ="container">
         <div class = "box">
-            <h3 class="title is-3">"{{ editing_task.title }}"</h3> <br>
-            <h4 class="subtitle is-4">Started on: {{ editing_task.time_began }}</h4>
-            {% if editing_task.time_ended != None %}
-            <h4 class="subtitle is-4 pulled-right"> Finished on {{editing_task.time_ended}}</h4>
+            <h3 class="title is-3">"{{ editing_project.title }}"</h3> <br>
             <br>
             {% endif %}
             
@@ -118,11 +115,9 @@
                     {% csrf_token %} 
                     <div class= "columns">
                         <div class = "column">
-                            {{ add_task_form|crispy }} 
+                            {{ add_project_form|crispy }} 
                         </div>
                         <div class = "column">
-                            {{ project |crispy }}
-                            <br>
                             {{ relationship_form|crispy }}
                         </div>
                     </div>

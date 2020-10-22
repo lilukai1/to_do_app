@@ -149,10 +149,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = BASE_DIR / 'to_do_static'
+STATIC_ROOT = BASE_DIR / 'to_do_static/'
 
 STATICFILES_DIRS = [
-BASE_DIR / 'static/'
+    BASE_DIR / 'static/'
 ]
 
 LOGIN_REDIRECT_URL = '/'

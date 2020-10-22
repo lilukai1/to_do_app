@@ -1,5 +1,5 @@
 from django import forms 
-from .models import Task, TaskRelationship
+from .models import Task, TaskRelationship, Project
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 from datetime import datetime
@@ -85,37 +85,41 @@ class testadd(forms.ModelForm):
         super(testadd, self).__init__(*args, **kwargs)
         self.fields['person']=person
 
-# def get_relationship_choices():
-#     query_fetch = Task.objects.filter(completed=False)
-#     choices_list = [q for q in query_fetch]
-#     relationship_choices={}
-#     print(dir(choices_list))
-#     for q in choices_list:
-#         print(q.target_task)
-#         relationship_choices[q.id] = q.target_task.title
+def get_relationship_choices():
+    query_fetch = Task.objects.filter(completed=False)
+    choices_list = [q for q in query_fetch]
+    relationship_choices=[]
+    for q in choices_list:
+        choice = (q.id, q.title)
+        relationship_choices.append(choice)
+    return relationship_choices
 
-#     return relationship_choices
-# print(get_relationship_choices())
-
-# get_relationship_choices = Task.objects.filter(completed=False)
-# choices = [c for c in get_relationship_choices]
-# print(dict(choices))
 class RelationshipForm(BaseInlineFormSet):
-    
+
     class Meta:
         model=TaskRelationship
-        fields=['target_task', 'relationship_status']
-        # form_choices = get_relationship_choices()
+        form_choices = get_relationship_choices()
+        fields=['target_task', 'relationship_status', 'project']
         # widgets={
-        #     'target_task' : forms.SelectMultiple(form_choices)
-        # }
+    #         'target_task' : forms.SelectMultiple(form_choices)
+    #     }
+    #         self.fields[] = forms.MultipleChoiceField(
+    #     required=False,
+    #     widget=forms.CheckboxSelectMultiple,
+    #     choices=FAVORITE_COLORS_CHOICES,
+    # )
     # def __init__(self, *args, **kwargs):
     #     super(RelationshipForm, self).__init__(*args, **kwargs)
     #     # self.fields['target_task'].queryset = Task.objects.filter(completed=False)
     #     self.fields['target_task']=
 
 
-RelationshipInlineFormSet = inlineformset_factory(Task, TaskRelationship, fields=('current_task', 'target_task', 'relationship_status',),
-        fk_name='current_task', extra=4, formset=RelationshipForm )
-#         # field_classes=('target_task',forms.MultipleChoiceField(Task.objects.filter(completed=False)))
-#         )
+# RelationshipInlineFormSet = inlineformset_factory(Task, TaskRelationship, fields=('project', 'current_task', 'target_task', 'relationship_status',),
+#         fk_name='current_task', extra=4, formset=RelationshipForm )
+# #         # field_classes=('target_task',forms.MultipleChoiceField(Task.objects.filter(completed=False)))
+# #         )
+
+class AddProjectForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = ['title', 'description',]

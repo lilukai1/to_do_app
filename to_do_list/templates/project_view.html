@@ -1,0 +1,68 @@
+{% extends "base_view.html" %}
+
+{% block content %}
+
+<section class= "add_project">
+  <div class ="container">
+      <div class = "box">
+          <h3 class="title is-3">"{{ project.title }}"</h3> <br>
+          
+          <section class = "section">
+              <div class="columns">
+                  <div class="column is-half">
+                      <div class = "box">
+                          <table class="table">
+                              <thead>
+                                  <tr>
+                                      <th>These need done before this project can be completed:</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  {% for p in project_tasks %} 
+                                  <tr>
+                                  {% if p.completed == False %} 
+
+                                  <td><a  href='{% url  "task_item" p.target_task_id %}'>{{ p.current_task.title }}</a> </td>
+                                  </tr>                            
+                                  {% endif %}
+                                  {% endfor %}
+                              </tbody>
+                              </table
+                          </div>
+                      </div>
+                  </div>
+                  <div class="column">
+                      <div class = "box">
+                          <table class="table">
+                              <thead>
+                                  <tr>
+                                      <th>These tasks have been completed:</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  {% for p in project_tasks %}
+                                  {% if p.completed == True %} 
+                                  <tr>
+                                    <td><a  href='{% url  "task_item" p.current_task_id %}'>{{ p.current_task }}</a> </td>
+                                    <br>
+                                  </tr>
+                                  {% endif %}
+                                  {% endfor %}
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+              {% for p in project_tasks %} 
+              <br>
+
+              <a  href='{% url  "task_item" p.current_task_id %}'>{{ p.current_task.title }}</a>
+                      
+              {% endfor %}
+          </div>
+
+{%endblock content %}
+  
+  
+  
+  

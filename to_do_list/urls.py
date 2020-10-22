@@ -2,7 +2,7 @@
 from django.contrib import admin
 from django.urls import include, path
 
-from to_do_list.views import (AllTasksList, DetailTaskView, 
+from to_do_list.views import (AllTasksList, DetailTaskView, base_view, project_view,
                               RelationshipEditView, TaskDeleteView, add_task_view,
                               toggle_checkmark, index_view)
 
@@ -13,6 +13,7 @@ urlpatterns = [
     path('list_view/', AllTasksList.as_view(template_name='list_view.html'), name='list_view'),
     path('add_task/', add_task_view, name='add_task'),
 
+    path('base/', base_view),
 
     path('tasks/', AllTasksList.as_view(template_name="list_view.html"), name ='tasks'),
     path('tasks/<int:pk>/', DetailTaskView.as_view(template_name="detail_view.html"), name ='task_item'),
@@ -20,5 +21,7 @@ urlpatterns = [
     path('tasks/<int:pk>/edit_task/', add_task_view, name='edit_task'),
     path('tasks/<int:pk>/toggle_checkmark', toggle_checkmark, name='toggle_checkmark'),
     path('tasks/<int:pk>/relationship/', RelationshipEditView.as_view(template_name="task_entry_view.html"), name='edit_relationship'),
+
+    path('projects/<int:pk>/', project_view, name ='project'),
 
 ]

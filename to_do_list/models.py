@@ -11,9 +11,12 @@ from multiselectfield import MultiSelectField
 
 RELATIONSHIP_AFTER_TASK = 'after_task'
 RELATIONSHIP_BEFORE_TASK = 'before_task'
+RELATIONSHIP_PROJECT = 'project'
 RELATIONSHIP_STATUS = [
     (RELATIONSHIP_AFTER_TASK, 'Current task can be done after '),
-    (RELATIONSHIP_BEFORE_TASK, 'Current task must be done before ')
+    (RELATIONSHIP_BEFORE_TASK, 'Current task must be done before '),
+    (RELATIONSHIP_PROJECT, 'project'),
+
     ]
 
 def opposite_status(status):
@@ -74,23 +77,28 @@ class Task(models.Model):
         elif status == "after_task":
             relation_filter = TaskRelationship.objects.filter(
                 Q(current_task_id=self.id), relationship_status=RELATIONSHIP_AFTER_TASK)
+        elif status == "project":
+            relation_filter = TaskRelationship.objects.filter(
+                Q(current_task_id=self.id), relationship_status=RELATIONSHIP_PROJECT)
+
         relation_list=relation_filter
         return relation_list
 
 
-    def get_related_to(self, status):
-        # return self.related_to.filter(current_task__relationship_status=status)
-        return self.related_to.filter(current_task__relationship_status=status,
-            current_task__target_task=self)
+    def set_project(self, project):
+        current_task_id = self
+        project = project
+        TaskRelationship.objects.get_or_create(current_task=current_task_id, relationship_status='project', project=project)
+    # def get_related_to(self, status):
+    #     # return self.related_to.filter(current_task__relationship_status=status)
+    #     return self.related_to.filter(current_task__relationship_status=status,
+    #         current_task__target_task=self)
 
-    def get_all_relations(self):
-        pass
+    # def get_before_tasks(self):
+    #     return self.get_related_to(RELATIONSHIP_BEFORE_TASK)
 
-    def get_before_tasks(self):
-        return self.get_related_to(RELATIONSHIP_BEFORE_TASK)
-
-    def get_after_tasks(self):
-        return self.get_related_to(RELATIONSHIP_AFTER_TASK)
+    # def get_after_tasks(self):
+    #     return self.get_related_to(RELATIONSHIP_AFTER_TASK)
 
     def get_context(self):
         context = {
@@ -104,16 +112,24 @@ class Task(models.Model):
             'relationships' : self.get_relationships(),
             'before_tasks' : self.get_relationships('before_task'),
             'after_tasks' : self.get_relationships('after_task'),
+            'project' : self.get_relationships('project'),
+        
         }
-        print("models", context['before_tasks'], context['after_tasks'])
         return context
 
 
+class Project(models.Model):
+    title = models.CharField(max_length=50)
+    description = models.TextField()
+
+    def __str__(self):
+        return(self.title)
 
 class TaskRelationship(models.Model):
     current_task= models.ForeignKey(Task, related_name="current_task", on_delete=models.CASCADE)
-    target_task = models.ForeignKey(Task, related_name="target_task", on_delete=models.CASCADE)
+    target_task = models.ForeignKey(Task, related_name="target_task", on_delete=models.CASCADE, null=True)
     relationship_status = models.CharField(max_length=50, choices=RELATIONSHIP_STATUS) 
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, blank=True, null=True, default=None)
 
     def __str__(self):
         return(f"{self.current_task.title}'s Relation")

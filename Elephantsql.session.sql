@@ -1,1 +1,1 @@
-UPDATE "to_do_list_taskrelationship" SET relationship_status='before' WHERE relationship_status='parent'
+UPDATE "to_do_list_taskrelationship" SET project_id=1
