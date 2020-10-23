@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
@@ -84,6 +85,9 @@ WSGI_APPLICATION = 'to_do.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+DATABASE_KEY = os.environ['DATABASE_KEY']
+
+
 DATABASES = {
 
     # 'default' : {
@@ -97,12 +101,13 @@ DATABASES = {
     
     # }
 
+
         'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'wbvjvqcl',
         'HOST' : 'rajje.db.elephantsql.com',
         'USER' : 'wbvjvqcl',
-        'PASSWORD' : '2_Zu8QIf5W40PCVUK_r6oVCSzGaEygIo',
+        'PASSWORD' : DATABASE_KEY,
         'PORT': '5432',
     }
 }
@@ -151,7 +156,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'to_do_list/static'
+    BASE_DIR / 'static'
 ]
 
 LOGIN_REDIRECT_URL = '/'
