@@ -7,8 +7,6 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 
-from multiselectfield import MultiSelectField
-
 RELATIONSHIP_AFTER_TASK = 'after_task'
 RELATIONSHIP_BEFORE_TASK = 'before_task'
 RELATIONSHIP_PROJECT = 'project'
