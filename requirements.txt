@@ -6,7 +6,6 @@ certifi==2020.6.20
 chardet==3.0.4
 click==7.1.2
 cookiecutter==1.7.2
-crispy==0.7.3
 cycler==0.10.0
 distlib==0.3.1
 dj-database-url==0.5.0
@@ -36,7 +35,6 @@ python-dateutil==2.8.1
 python-slugify==4.0.1
 pytz==2020.1
 requests==2.24.0
-silx==0.13.2
 six==1.15.0
 sqlparse==0.4.0
 text-unidecode==1.3
