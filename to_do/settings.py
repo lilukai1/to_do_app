@@ -20,13 +20,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '#_#81uk#^(q6(jfw!qidro*+mg#(d^lr)v1_zwf6s-$arbpvyt'
-
+SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
-     'polar-atoll-29761.herokuapp.com',
+     'annies-to-do-app.herokuapp.com',
      '127.0.0.1',
      'localhost',
 ]
@@ -149,10 +148,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = BASE_DIR / 'to_do_static/'
+STATIC_ROOT = BASE_DIR / 'static'
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'static/'
+    BASE_DIR / 'to_do_list/static'
 ]
 
 LOGIN_REDIRECT_URL = '/'
