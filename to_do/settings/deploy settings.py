@@ -29,6 +29,8 @@ ALLOWED_HOSTS = [
      'annies-to-do-app.herokuapp.com',
      '127.0.0.1',
      'localhost',
+     'coderannie.com',
+     'transparent-firefly-9qyjzvy95zh643n2e2jxxjyl.herokudns.com',
 ]
 
 
@@ -48,9 +50,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    # 'whitenoise.middleware.WhiteNoiseMiddleware'
     'django.middleware.security.SecurityMiddleware',
-    # 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    'whitenoise.middleware.WhiteNoiseMiddleware'
+    'whitenoise.storage.CompressedManifestStaticFilesStorage'
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -88,29 +90,16 @@ WSGI_APPLICATION = 'to_do.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-# DATABASE_KEY = os.environ['DATABASE_KEY']
+DATABASE_KEY = os.environ['DATABASE_KEY']
 
 
 DATABASES = {
-
-    # 'default' : {
-    # 'ENGINE': 'django.db.backends.postgresql',
-    # 'HOST': 'ec2-107-20-104-234.compute-1.amazonaws.com'
-    # 'DATABASE':'dd2eu7l7pf51pa'
-    # 'USER': 'xtatteraczujgg'
-    # 'PORT': '5432'
-    # 'PASSWORD': '57b8a3bdc55d2471a58dcfa775782a47ef6d2d002ff8f994cd0fff521e8065a5'
-    # 'URI': 'postgres://xtatteraczujgg:57b8a3bdc55d2471a58dcfa775782a47ef6d2d002ff8f994cd0fff521e8065a5@ec2-107-20-104-234.compute-1.amazonaws.com:5432/dd2eu7l7pf51pa'
-    
-    # }
-
 
         'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'wbvjvqcl',
         'HOST' : 'rajje.db.elephantsql.com',
         'USER' : 'wbvjvqcl',
-        'PASSWORD' : '2_Zu8QIf5W40PCVUK_r6oVCSzGaEygIo',
         'PORT': '5432',
     }
 }
@@ -159,8 +148,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'

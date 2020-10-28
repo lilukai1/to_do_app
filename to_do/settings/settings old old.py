@@ -22,17 +22,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = "#_#81uk#^(q6(jfw!qidro*+mg#(d^lr)v1_zwf6s-$arbpvyt"
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
      'annies-to-do-app.herokuapp.com',
      '127.0.0.1',
      'localhost',
-     'coderannie.com',
-     'transparent-firefly-9qyjzvy95zh643n2e2jxxjyl.herokudns.com',
 ]
 
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
 
 # Application definition
 
@@ -46,13 +48,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'to_do_list',
     'accounts',
-    'crispy_forms',    
+    'crispy_forms',   
+    'debug_toolbar',
+
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware'
-    'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -90,16 +94,29 @@ WSGI_APPLICATION = 'to_do.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASE_KEY = os.environ['DATABASE_KEY']
+# DATABASE_KEY = os.environ['DATABASE_KEY']
 
 
 DATABASES = {
+
+    # 'default' : {
+    # 'ENGINE': 'django.db.backends.postgresql',
+    # 'HOST': 'ec2-107-20-104-234.compute-1.amazonaws.com'
+    # 'DATABASE':'dd2eu7l7pf51pa'
+    # 'USER': 'xtatteraczujgg'
+    # 'PORT': '5432'
+    # 'PASSWORD': '57b8a3bdc55d2471a58dcfa775782a47ef6d2d002ff8f994cd0fff521e8065a5'
+    # 'URI': 'postgres://xtatteraczujgg:57b8a3bdc55d2471a58dcfa775782a47ef6d2d002ff8f994cd0fff521e8065a5@ec2-107-20-104-234.compute-1.amazonaws.com:5432/dd2eu7l7pf51pa'
+    
+    # }
+
 
         'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'wbvjvqcl',
         'HOST' : 'rajje.db.elephantsql.com',
         'USER' : 'wbvjvqcl',
+        'PASSWORD' : 'rVEC7UqMQSsNvmbOCG15ZybKatSMji-w',
         'PORT': '5432',
     }
 }
@@ -162,4 +179,4 @@ FIXTURE_DIRS =[
 ## tagging settings
 FORCE_LOWERCASE_TAGS = True
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
