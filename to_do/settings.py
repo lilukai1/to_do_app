@@ -30,14 +30,13 @@ ALLOWED_HOSTS = [
      '127.0.0.1',
      'localhost',
      'coderannie.com',
-     'transparent-firefly-9qyjzvy95zh643n2e2jxxjyl.herokudns.com',
+     'metaphysical-stonecrop-hzw6v5pvd80iqt8dtklsz9fg.herokudns.com',
 ]
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    # 'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
