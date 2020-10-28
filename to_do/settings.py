@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,6 +32,9 @@ ALLOWED_HOSTS = [
      'localhost',
 ]
 
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
 
 # Application definition
 
@@ -44,13 +48,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'to_do_list',
     'accounts',
-    'crispy_forms',    
+    'crispy_forms',   
+    'debug_toolbar',
+
 ]
 
 MIDDLEWARE = [
-    # 'whitenoise.middleware.WhiteNoiseMiddleware'
     'django.middleware.security.SecurityMiddleware',
-    # 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -110,7 +116,7 @@ DATABASES = {
         'NAME': 'wbvjvqcl',
         'HOST' : 'rajje.db.elephantsql.com',
         'USER' : 'wbvjvqcl',
-        'PASSWORD' : '2_Zu8QIf5W40PCVUK_r6oVCSzGaEygIo',
+        'PASSWORD' : 'rVEC7UqMQSsNvmbOCG15ZybKatSMji-w',
         'PORT': '5432',
     }
 }
@@ -159,8 +165,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
@@ -173,3 +178,5 @@ FIXTURE_DIRS =[
 
 ## tagging settings
 FORCE_LOWERCASE_TAGS = True
+
+# django_heroku.settings(locals())

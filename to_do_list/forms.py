@@ -16,7 +16,7 @@ class CompletedCheck(forms.ModelForm):
 class AddTaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['title', 'time_began', 'priority',]
+        fields = ['title', 'time_began', 'priority', 'project']
 
     def __init__(self, *args, **kwargs):
         person = kwargs.pop('person')
@@ -35,7 +35,7 @@ class AddTaskForm(forms.ModelForm):
 class UpdateTaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['title', 'time_began', 'time_ended', 'completed', 'relationships']
+        fields = ['title', 'time_began', 'time_ended', 'completed', 'relationships', 'project']
 
     def save(self, *args, **kwargs):
         self.instance.person = self.person
@@ -94,32 +94,27 @@ def get_relationship_choices():
         relationship_choices.append(choice)
     return relationship_choices
 
-class RelationshipForm(BaseInlineFormSet):
+
+# class ProjectForm(BaseInlineFormSet):
+
+#     class Meta:
+#         model=TaskRelationship
+#         fields=['project']
+
+class RelationshipForm(forms.ModelForm):
 
     class Meta:
         model=TaskRelationship
-        form_choices = get_relationship_choices()
-        fields=['target_task', 'relationship_status', 'project']
-        # widgets={
-    #         'target_task' : forms.SelectMultiple(form_choices)
-    #     }
-    #         self.fields[] = forms.MultipleChoiceField(
-    #     required=False,
-    #     widget=forms.CheckboxSelectMultiple,
-    #     choices=FAVORITE_COLORS_CHOICES,
-    # )
-    # def __init__(self, *args, **kwargs):
-    #     super(RelationshipForm, self).__init__(*args, **kwargs)
-    #     # self.fields['target_task'].queryset = Task.objects.filter(completed=False)
-    #     self.fields['target_task']=
-
-
-# RelationshipInlineFormSet = inlineformset_factory(Task, TaskRelationship, fields=('project', 'current_task', 'target_task', 'relationship_status',),
-#         fk_name='current_task', extra=4, formset=RelationshipForm )
-# #         # field_classes=('target_task',forms.MultipleChoiceField(Task.objects.filter(completed=False)))
-# #         )
-
+        form_choices = ['before_task','after_task']
+        fields=['target_task', 'relationship_status']
+     
 class AddProjectForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ['title', 'description',]
+
+
+# ProjectInlineFormSet =  inlineformset_factory(Task, TaskRelationship, fields=('project',),
+#     fk_name='current_task', extra=0, can_delete=False)
+RelationshipInlineFormSet =  inlineformset_factory(Task, TaskRelationship, fields=('target_task', 'relationship_status'),
+    fk_name='current_task', extra=2)

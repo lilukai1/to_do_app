@@ -6,10 +6,10 @@
   <div class ="container">
       <div class = "box">
           <h3 class="title is-3">"{{ project.title }}"</h3> <br>
-          
+          <progress class="progress is-large is-info" value="{{ progress_completed }}" max="{{progress_max}}">{{ progress_completed/progress_max </progress><br>
           <section class = "section">
               <div class="columns">
-                  <div class="column is-half">
+                  <div class="column">
                       <div class = "box">
                           <table class="table">
                               <thead>
@@ -19,10 +19,9 @@
                               </thead>
                               <tbody>
                                   {% for p in project_tasks %} 
-                                  <tr>
                                   {% if p.completed == False %} 
-
-                                  <td><a  href='{% url  "task_item" p.target_task_id %}'>{{ p.current_task.title }}</a> </td>
+                                <tr>
+                                  <td><a  href='{% url  "task_detail" p.id %}'>{{ p.title }}</a> </td>
                                   </tr>                            
                                   {% endif %}
                                   {% endfor %}
@@ -41,10 +40,9 @@
                               </thead>
                               <tbody>
                                   {% for p in project_tasks %}
-                                  {% if p.completed == True %} 
+                                  {% if p.completed  %} 
                                   <tr>
-                                    <td><a  href='{% url  "task_item" p.current_task_id %}'>{{ p.current_task }}</a> </td>
-                                    <br>
+                                    <td><a  href='{% url  "project_detail" p.id %}'>{{ p.title }}</a> </td>
                                   </tr>
                                   {% endif %}
                                   {% endfor %}
@@ -53,12 +51,8 @@
                       </div>
                   </div>
               </div>
-              {% for p in project_tasks %} 
-              <br>
+              </section>
 
-              <a  href='{% url  "task_item" p.current_task_id %}'>{{ p.current_task.title }}</a>
-                      
-              {% endfor %}
           </div>
 
 {%endblock content %}

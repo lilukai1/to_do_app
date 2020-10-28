@@ -64,7 +64,7 @@
                                 <tbody>
                                     {% for task in before_tasks %} 
                                     {% if task.completed != True %} 
-                                    <td><a  href='{% url  "task_item" task.target_task_id %}'>{{ task.target_task }}</a> </td>
+                                    <td><a  href='{% url  "task_detail" task.target_task_id %}'>{{ task.target_task }}</a> </td>
                                     <br>
                                     {% endif %}
                                     {% endfor %}
@@ -95,7 +95,7 @@
                                             </span>
                                         </td>
                                         {%endif%}
-                                        <td> <a  href='{% url  "task_item" task.target_task_id %}'>{{task.target_task}}</a> </td> 
+                                        <td> <a  href='{% url  "task_detail" task.target_task_id %}'>{{task.target_task}}</a> </td> 
                                         <br>
                                     </tr>
                                     {%endfor%}
@@ -118,10 +118,11 @@
                     {% csrf_token %} 
                     <div class= "columns">
                         <div class = "column">
+                            {{ form |crispy}}
                             {{ add_task_form|crispy }} 
                         </div>
                         <div class = "column">
-                            {{ project |crispy }}
+                            {{ project|crispy }}
                             <br>
                             {{ relationship_form|crispy }}
                         </div>
@@ -134,7 +135,7 @@
                     {% else %}
                     <a class="button is-warning" href='{% url "toggle_checkmark" editing_task.id %}'>Mark Done</a>
                     {% endif %}
-                    <a class="button is-danger is-pulled-right" href='{% url "delete_task" editing_task.id %}'>Delete Task</a> 
+                    <a class="button is-danger is-pulled-right" href='{% url "delete_task" editing_task.id %}'>Delete</a> 
 
                     {% endif %}
                 </form> 

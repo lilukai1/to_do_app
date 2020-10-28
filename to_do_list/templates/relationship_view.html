@@ -1,3 +1,4 @@
+{% extends "base_view.html" %}
 
 {% block content %}
 <br>
@@ -31,7 +32,7 @@
                                 <tbody>
                                     {% for parent in editing_task.get_parents%} 
                                     {% if parent.completed != True%} 
-                                    <td><a  href='{% url  "task_item" item.id %}'>{{ parent.title }}</a> </td>
+                                    <td><a  href='{% url  "task_detail" item.id %}'>{{ parent.title }}</a> </td>
                                     <br>
                                     {% endif %}
                                     {% endfor %}
@@ -52,7 +53,7 @@
                                 <tbody>
                                     {% for child in editing_task.get_children%} 
                                     {% if child.completed != True%}
-                                    <td>  <a  href='{% url  "task_item" item.id %}'>{{child.title}}</a> </td> 
+                                    <td>  <a  href='{% url  "task_detail" item.id %}'>{{child.title}}</a> </td> 
                                     <br>
                                     {% endif %}
                                     {%endfor%}

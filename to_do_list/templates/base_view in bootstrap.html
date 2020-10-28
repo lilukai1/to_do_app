@@ -38,7 +38,7 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">             
                             {% for item in all_tasks %}
                             {% if not item.completed %}
-                            <a class="dropdown-item" href='{% url "task_item" item.id %}'>
+                            <a class="dropdown-item" href='{% url "task_detail" item.id %}'>
                                 {{ forloop.counter }}. {{ item.title }}
                             </a>
                             

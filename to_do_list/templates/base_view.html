@@ -20,71 +20,34 @@
 <nav class="navbar is-light" role="navigation" aria-label="main navigation" >
     <div class="navbar-brand">
         <a class="navbar-item" href="{% url 'list_view' %}">
-            <img src={% static '/to_do_list/img/coderannielogo.png' %} width="50" height="1000">
-        </a>
-        
-        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="to_do_main_navbar">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-        </a>
+            <img src={% static 'accounts/img/logo.png' %} width="50" height="50">
+        </a>  
     </div>
     
-    <div id="to_do_main_navbar" class="navbar-menu">
+    <div id="to_do_main_navbar" class="navbar-menu is-active">
         <div class="navbar-start">
             <div class="navbar-item">
                 {% if user.is_authenticated %}
                 <p> Hi, {{user}}</p>
-            </div>
-            <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link" href ='{% url "list_view" %}'> 
-                    Tasks
-                </a>   
-                <div class="navbar-dropdown">
-                    {% for item in all_tasks %}
-                    {% if not item.completed %}
-                    <a class="navbar-item" href='{% url "task_item" item.id %}'>
-                        {{ forloop.counter }}. {{ item.title }}
-                    </a>
-                    {%endif%}
-                    {% endfor %}
-                </div>
-            </div>      
+            </div>            
+            <div class="navbar-item">
+
             <a class="navbar-item" href="{% url 'add_task' %}">
                 Add a Task
             </a>
-            <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link">
-                    Edit Tasks
-                </a>
-                <div class="navbar-dropdown">
-                    {% for item in all_tasks %}
-                    {% if not item.completed %}
-                    <a class="navbar-item" href='{% url  "edit_task" item.id %}' pk={{ item.id }}>{{ forloop.counter }}. {{ item.title }}</a>
-                    {%endif%}
-                    {% endfor %}
-                </div>
-            </div>
         </div>
-        
-        <div class="navbar-end">
-            <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link" href ='{% url "list_view" %}'> 
-                    Delete Task
-                </a>   
-                <div class="navbar-dropdown">
-                    {% for item in all_tasks %}
-                    {% if not item.completed %}
-                    <a class="navbar-item" href='{% url "delete_task" item.id %}'>
-                        {{ forloop.counter }}. {{ item.title }}
-                    </a>
-                    {% endif %}
-                    {% endfor %}
-                </div>
+            <div class="navbar-item">
+                <a class="navbar-item" href="{% url 'projects' %}">
+                    Projects
+                </a>
+            </div>
+            <div class="navbar-item">
+                <a class="navbar-item" href ='{% url "list_view" %}'> 
+                    Tasks
+                </a>  
             </div>      
             <div class="navbar-item">
                 <div class="buttons">
-                    
                     <a class="button is-dark" href='{% url "logout" %}'>
                         Log out 
                     </a>
@@ -93,17 +56,17 @@
             </div>
         </div>
         <div class="navbar-end">                       
-                    <a class="button is-primary" href="{% url 'login' %}" >
-                        Log In
-                    </a>
-                    <a class="button is-primary" href = "{% url 'signup'%}">
-                        Sign up
-                    </a>
-                    {% endif %}
-                </div>
-            </div>
+            <a class="button is-primary" href="{% url 'login' %}" >
+                Log In
+            </a>
+            <a class="button is-primary" href = "{% url 'signup'%}">
+                Sign up
+            </a>
+            {% endif %}
         </div>
     </div>
+</div>
+</div>
 </div>
 </nav>
 <div class = "container">

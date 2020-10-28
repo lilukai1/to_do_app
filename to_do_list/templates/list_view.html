@@ -35,7 +35,7 @@
                 {%endif%}
             </td>
             
-            <td>{{forloop.counter}}. <a href='{% url "task_item" item.id %}' pk = {{item.id}}> {{ item.title }}</a></td>
+            <td>{{forloop.counter}}. <a href='{% url "edit_task" item.id %}' pk = {{item.id}}> {{ item.title }}</a></td>
             <td>{{ item.time_began}}</td>
             <td>{{ item.time_ended}}</td>
             <td>
@@ -49,7 +49,7 @@
         
         {% elif user.is_admin %}
         
-        <tr><td>{{forloop.counter}}. <a href='{% url "task_item" item.id %}' pk = {{item.id}}> {{ item.title }}</a></td>
+        <tr><td>{{forloop.counter}}. <a href='{% url "task_detail" item.id %}' pk = {{item.id}}> {{ item.title }}</a></td>
             <td>{{ item.time_began}} </td>
         </tr>
         <br>

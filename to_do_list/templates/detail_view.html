@@ -28,7 +28,7 @@
                               <tbody>
                                   {% for task in before_tasks %} 
                                   {% if task.completed != True %} 
-                                  <td><a  href='{% url  "task_item" task.target_task_id %}'>{{ task.target_task }}</a> </td>
+                                  <td><a  href='{% url  "task_detail" task.target_task_id %}'>{{ task.target_task }}</a> </td>
                                   <br>
                                   {% endif %}
                                   {% endfor %}
@@ -59,7 +59,7 @@
                                           </span>
                                       </td>
                                       {%endif%}
-                                      <td> <a  href='{% url  "task_item" task.target_task_id %}'>{{task.target_task}}</a> </td> 
+                                      <td> <a  href='{% url  "task_detail" task.target_task_id %}'>{{task.target_task}}</a> </td> 
                                       <br>
                                   </tr>
                                   {%endfor%}

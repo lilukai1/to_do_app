@@ -1,0 +1,138 @@
+<!DOCTYPE html>    
+{% load static %}
+
+<html>
+<head>
+    <title>
+        {% block title %} 
+        {% if page_title %}
+        {{ page_title }}
+        {% else %} 
+        To Do List
+        {% endif %}
+        {% endblock title %}
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/bulmaswatch/default/bulmaswatch.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
+</head>
+
+<nav class="navbar is-light" role="navigation" aria-label="main navigation" >
+    <div class="navbar-brand">
+        <a class="navbar-item" href="{% url 'list_view' %}">
+            <img src={% static 'accounts/img/logo.png' %} width="50" height="50">
+        </a>  
+    </div>
+    
+    <div id="to_do_main_navbar" class="navbar-menu is-active">
+        <div class="navbar-start">
+            <div class="navbar-item">
+                {% if user.is_authenticated %}
+                <p> Hi, {{user}}</p>
+            </div>
+            <a class="navbar-item is-active" href="{% url 'add_task' %}">
+                Add a Task
+            </a>
+            <div class="navbar-item has-dropdown">
+                <a class="navbar-item is-active" href="{% url 'projects' %}">
+                    Projects
+                </a>
+                <div class="navbar-dropdown">
+                    {% for item in all_projects %}
+                    <a class="navbar-item" href='{% url "project_detail" item.id %}'>
+                        {{ forloop.counter }}. {{ item.title }}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link" href ='{% url "list_view" %}'> 
+                    Tasks
+                </a>   
+                <div class="navbar-dropdown">
+                    {% for item in all_tasks %}
+                    {% if not item.completed %}
+                    <a class="navbar-item" href='{% url "task_detail" item.id %}'>
+                        {{ forloop.counter }}. {{ item.title }}
+                    </a>
+                    {%endif%}
+                    {% endfor %}
+                </div>
+            </div>      
+            
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    Edit Tasks
+                </a>
+                <div class="navbar-dropdown">
+                    {% for item in all_tasks %}
+                    {% if not item.completed %}
+                    <a class="navbar-item" href='{% url  "edit_task" item.id %}' pk={{ item.id }}>{{ forloop.counter }}. {{ item.title }}</a>
+                    {%endif%}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="navbar-end">
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link" href ='{% url "list_view" %}'> 
+                    Delete Task
+                </a>   
+                <div class="navbar-dropdown">
+                    {% for item in all_tasks %}
+                    {% if not item.completed %}
+                    <a class="navbar-item" href='{% url "delete_task" item.id %}'>
+                        {{ forloop.counter }}. {{ item.title }}
+                    </a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>      
+            <div class="navbar-item">
+                <div class="buttons">
+                    
+                    <a class="button is-dark" href='{% url "logout" %}'>
+                        Log out 
+                    </a>
+                    {% else %}
+                </div>
+            </div>
+        </div>
+        <div class="navbar-end">                       
+            <a class="button is-primary" href="{% url 'login' %}" >
+                Log In
+            </a>
+            <a class="button is-primary" href = "{% url 'signup'%}">
+                Sign up
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</nav>
+<div class = "container">
+    {% if messages %}
+    <div class="notification is-success">
+        <button class="delete"></button>
+        <ul class="messages">
+            {% for message in messages %}
+            <li class="{{ message.tags }}">
+                <strong>
+                    {{ message }}
+                </strong>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}    
+</div>
+
+<div class = "section">
+    {% block content %}
+    
+    {% endblock content %}
+</div>
+</body>
