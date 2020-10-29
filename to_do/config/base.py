@@ -14,32 +14,21 @@ from pathlib import Path
 import os
 import django_heroku
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "#_#81uk#^(q6(jfw!qidro*+mg#(d^lr)v1_zwf6s-$arbpvyt"
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = [
      'annies-to-do-app.herokuapp.com',
      '127.0.0.1',
      'localhost',
+     'coderannie.com',
+     'transparent-firefly-9qyjzvy95zh643n2e2jxxjyl.herokudns.com',
 ]
 
-INTERNAL_IPS = [
-    '127.0.0.1',
-]
 
 # Application definition
 
 INSTALLED_APPS = [
-    # 'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,15 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'to_do_list',
     'accounts',
-    'crispy_forms',   
-    'debug_toolbar',
-
+    'crispy_forms',    
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -81,8 +67,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'to_do_list.context_processor.all_context'
-                
-
+            
             ],
         },
     },
@@ -90,43 +75,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'to_do.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-# DATABASE_KEY = os.environ['DATABASE_KEY']
-
-
-DATABASES = {
-
-    # 'default' : {
-    # 'ENGINE': 'django.db.backends.postgresql',
-    # 'HOST': 'ec2-107-20-104-234.compute-1.amazonaws.com'
-    # 'DATABASE':'dd2eu7l7pf51pa'
-    # 'USER': 'xtatteraczujgg'
-    # 'PORT': '5432'
-    # 'PASSWORD': '57b8a3bdc55d2471a58dcfa775782a47ef6d2d002ff8f994cd0fff521e8065a5'
-    # 'URI': 'postgres://xtatteraczujgg:57b8a3bdc55d2471a58dcfa775782a47ef6d2d002ff8f994cd0fff521e8065a5@ec2-107-20-104-234.compute-1.amazonaws.com:5432/dd2eu7l7pf51pa'
-    
-    # }
-
-
-        'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'wbvjvqcl',
-        'HOST' : 'rajje.db.elephantsql.com',
-        'USER' : 'wbvjvqcl',
-        'PASSWORD' : 'rVEC7UqMQSsNvmbOCG15ZybKatSMji-w',
-        'PORT': '5432',
-    }
-}
-
-import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db_from_env)
-
-# Password validation
-# https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -143,10 +91,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/3.1/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -156,9 +100,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
@@ -177,6 +118,6 @@ FIXTURE_DIRS =[
 ] ### python manage.py loaddata db_test.json    python manage.py dumpdata to_do_list.task > db_test.json 
 
 ## tagging settings
-FORCE_LOWERCASE_TAGS = True
+# FORCE_LOWERCASE_TAGS = True
+print('base loaded')
 
-# django_heroku.settings(locals())
