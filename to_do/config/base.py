@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-import os
 import django_heroku
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,17 +27,7 @@ ALLOWED_HOSTS = [
 
 # Application definition
 
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'to_do_list',
-    'accounts',
-    'crispy_forms',    
-]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -66,7 +55,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'to_do_list.context_processor.all_context'
+                'to_do_list.context_processor.all_context',
             
             ],
         },
@@ -119,5 +108,4 @@ FIXTURE_DIRS =[
 
 ## tagging settings
 # FORCE_LOWERCASE_TAGS = True
-print('base loaded')
 

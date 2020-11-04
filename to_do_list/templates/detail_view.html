@@ -75,7 +75,9 @@
               </section>
               {% endif %}
           </div>
-
+         <a class="button is-success"  value="Edit Task" href='{% url "edit_task" task.id %}' pk = {{task.id}}>Edit Task</a>     </td>
+        <a class="button is-warning"  value="Delete Task" href='{% url "delete_task" task.id %}' pk = {{task.id}}>Delete Task</a> </td> 
+      
 {%endblock content %}
   
   

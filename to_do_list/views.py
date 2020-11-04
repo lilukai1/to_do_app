@@ -20,7 +20,7 @@ class AllTasksList(ListView):
     model = Task
     context_object_name = 'task_list'
     paginate_by=10
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["page_title"] = "All Tasks"

@@ -31,11 +31,10 @@
                 <p> Hi, {{user}}</p>
             </div>            
             <div class="navbar-item">
-
-            <a class="navbar-item" href="{% url 'add_task' %}">
-                Add a Task
-            </a>
-        </div>
+                <a class="navbar-item" href="{% url 'add_task' %}">
+                    Add a Task
+                </a>
+            </div>
             <div class="navbar-item">
                 <a class="navbar-item" href="{% url 'projects' %}">
                     Projects
@@ -45,29 +44,21 @@
                 <a class="navbar-item" href ='{% url "list_view" %}'> 
                     Tasks
                 </a>  
-            </div>      
+            </div>     
+        </div>
+        <div class="navbar-end">              
             <div class="navbar-item">
                 <div class="buttons">
                     <a class="button is-dark" href='{% url "logout" %}'>
                         Log out 
                     </a>
-                    {% else %}
                 </div>
             </div>
         </div>
-        <div class="navbar-end">                       
-            <a class="button is-primary" href="{% url 'login' %}" >
-                Log In
-            </a>
-            <a class="button is-primary" href = "{% url 'signup'%}">
-                Sign up
-            </a>
-            {% endif %}
-        </div>
     </div>
 </div>
-</div>
-</div>
+{% endif %}
+
 </nav>
 <div class = "container">
     {% if messages %}

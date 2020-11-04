@@ -34,12 +34,8 @@ class Project(models.Model):
 
     def get_progress(self):
         tasks = Task.objects.filter(project=self)
-        print('ok')
-        progress_completed= tasks.completed.count()
-        print(progress_completed)
+        progress_completed= sum([task.completed for task in tasks])
         progress_max= tasks.count()
-        print(progress_max)
-        print(progress_completed,progress_max)
         return(progress_completed/progress_max)
 
 class Task(models.Model):

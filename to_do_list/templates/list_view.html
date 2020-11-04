@@ -6,12 +6,12 @@
         <thead>
             <tr>
                 <h2 class="title-is-2">
-                <th></th>
-                <th>Task</th>
-                <th>Started On</th>
-                <th>Finished On</th>
-                <th></th>
-                <th></th>
+                    <th></th>
+                    <th>Task</th>
+                    <th>Started On</th>
+                    <th>Finished On</th>
+                    <th></th>
+                    <th></th>
                 </h2>
             </tr>
         </thead>
@@ -20,43 +20,53 @@
             {% if user == item.person %}
             <tr>
                 <td>
-                {% if item.completed %}
-                <a class="button is-white"  input type ="submit" href='{% url "toggle_checkmark" item.id %}' pk = {{item.id}}>
-                    <span class="icon has-text-success">
-                        <i class="fas fa-check-square"></i>
-                    </span>
-                </a>
-                {% else %}
-                <a class="button is-white"  input type ="submit" href='{% url "toggle_checkmark" item.id %}' pk = {{item.id}}>
-                    <span class="icon has-text-danger">
-                        <i class="fas fa-ban"></i>
-                    </span>
-                </a>
-                {%endif%}
-            </td>
-            
-            <td>{{forloop.counter}}. <a href='{% url "edit_task" item.id %}' pk = {{item.id}}> {{ item.title }}</a></td>
-            <td>{{ item.time_began}}</td>
-            <td>{{ item.time_ended}}</td>
-            <td>
-                <a class="button is-success"  value="Edit Task" href='{% url "edit_task" item.id %}' pk = {{item.id}}>Edit Task</a>
-            </td>
-            <td>
-                <a class="button is-warning"  value="Delete Task" href='{% url "delete_task" item.id %}' pk = {{item.id}}>Delete Task</a>
-            </td>
-            
-        </tr>
-        
-        {% elif user.is_admin %}
-        
-        <tr><td>{{forloop.counter}}. <a href='{% url "task_detail" item.id %}' pk = {{item.id}}> {{ item.title }}</a></td>
-            <td>{{ item.time_began}} </td>
-        </tr>
-        <br>
-        {% endif %}
-        {% endfor %}
-    </p>
+                    {% if item.completed %}
+                    <a class="button is-white"  input type ="submit" href='{% url "toggle_checkmark" item.id %}' pk = {{item.id}}>
+                        <span class="icon has-text-success">
+                            <i class="fas fa-check-square"></i>
+                        </span>
+                    </a>
+                    {% else %}
+                    <a class="button is-white"  input type ="submit" href='{% url "toggle_checkmark" item.id %}' pk = {{item.id}}>
+                        <span class="icon has-text-danger">
+                            <i class="fas fa-ban"></i>
+                        </span>
+                    </a>
+                    {%endif%}
+                </td>
+                
+                <td>{{forloop.counter}}. <a href='{% url "task_detail" item.id %}' pk = {{item.id}}> {{ item.title }}</a></td>
+                <td>{{ item.time_began}}</td>
+                <td>{{ item.time_ended}}</td>
+                <td> <a class="button is-success"  value="Edit Task" href='{% url "edit_task" item.id %}' pk = {{item.id}}>Edit Task</a>     </td>
+                <td> <a class="button is-warning"  value="Delete Task" href='{% url "delete_task" item.id %}' pk = {{item.id}}>Delete Task</a> </td> 
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<br>
+<br>
 
+<div class="container">
+    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+            <a class="pagination-link" href="?page=1">&laquo; first</a>
+            <a class="pagination-previous" href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+            
+            <span class="pagination-link is-current" aria-label="Current" aria-current="page">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+            
+            {% if page_obj.has_next %}
+            <a class="pagination-next" href="?page={{ page_obj.next_page_number }}">next</a>
+            <a class="pagination-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </nav>
+</div>
 
-    {%endblock content %}
-    
+{%endblock content %}

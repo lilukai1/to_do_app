@@ -6,7 +6,7 @@
   <div class ="container">
       <div class = "box">
           <h3 class="title is-3">"{{ project.title }}"</h3> <br>
-          <progress class="progress is-large is-info" value="{{ progress_completed }}" max="{{progress_max}}">{{ progress_completed/progress_max </progress><br>
+          <progress class="progress is-large is-info" value="{{ project.get_progress }}" max="{{ 1 }}">{{ project.get_progress }} </progress><br>
           <section class = "section">
               <div class="columns">
                   <div class="column">
@@ -42,7 +42,7 @@
                                   {% for p in project_tasks %}
                                   {% if p.completed  %} 
                                   <tr>
-                                    <td><a  href='{% url  "project_detail" p.id %}'>{{ p.title }}</a> </td>
+                                    <td><a  href='{% url  "task_detail" p.id %}'>{{ p.title }}</a> </td>
                                   </tr>
                                   {% endif %}
                                   {% endfor %}
