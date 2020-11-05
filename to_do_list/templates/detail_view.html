@@ -28,6 +28,7 @@
                               <tbody>
                                   {% for task in before_tasks %} 
                                   {% if task.completed != True %} 
+
                                   <td><a  href='{% url  "task_detail" task.target_task_id %}'>{{ task.target_task }}</a> </td>
                                   <br>
                                   {% endif %}
@@ -75,9 +76,13 @@
               </section>
               {% endif %}
           </div>
+          {% if user.is_authenticated %}
          <a class="button is-success"  value="Edit Task" href='{% url "edit_task" task.id %}' pk = {{task.id}}>Edit Task</a>     </td>
         <a class="button is-warning"  value="Delete Task" href='{% url "delete_task" task.id %}' pk = {{task.id}}>Delete Task</a> </td> 
-      
+      {% else %}
+      <a class="button is-success"  value="Edit Task" disabled=True>Edit Task</a>     </td>
+      <a class="button is-warning"  value="Delete Task" disabled=True>Delete Task</a> </td> 
+  {% endif %}
 {%endblock content %}
   
   

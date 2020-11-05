@@ -28,4 +28,6 @@ urlpatterns = [
     path('projects/', ProjectList.as_view(template_name="project_list_view.html"), name ='projects'),
     path('projects/<int:pk>/', ProjectDetailView.as_view(template_name='project_view.html'), name ='project_detail'),
 
+
+
 ]

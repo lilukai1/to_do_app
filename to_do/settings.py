@@ -1,5 +1,3 @@
-# from to_do.config.base import *
-
 try:
     print("Trying dev settings...")
     from to_do.config.local import *

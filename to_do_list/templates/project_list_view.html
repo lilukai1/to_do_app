@@ -2,35 +2,38 @@
 <br>
 {% block content %}
 <div class = "container">
-    <table class="table is-fullwidth is-hoverable">
-        <thead>
-            <tr>
-                <h2 class="title-is-2">
-                <th>Project</th>
-                <th></th>
-                <th></th>
-                </h2>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in project_list %}
-            {% if user == item.person %}
-            <tr>
-            
-            <td>{{forloop.counter}}. <a href='{% url "project_detail" item.id %}' pk = {{item.id}}> {{ item.title }}</a></td>
-            <td><progress class="progress is-small is-info" value="{{ item.get_progress }}" max="100">{{ get_progress }}</progress></td>
-            <td>{{ item.get_progress}}a</td>
-            
-        </tr>
-        
-        {% elif user.is_admin %}
-        
-        <tr><td>{{forloop.counter}}. <a href='{% url "project_detail" item.id %}' pk = {{item.id}}> {{ item.title }}</a></td>
-            <td>{{ item.time_began}} </td>
-        </tr>
+    <center>                
+        <h2 class="title is-2">Project</h2>
         <br>
-        {% endif %}
-        {% endfor %}
-    </p>
-    {%endblock content %}
-    
+    </center>
+    <div class = "box">
+        <table class="table is-fullwidth is-hoverable">
+            <thead>
+            </thead>
+            <tbody>
+                {% if user.is_authenticated %}
+
+                {% for item in project_list %}
+                {% if user == item.person %}
+                <tr>
+                    <td>{{forloop.counter}}. <a href='{% url "project_detail" item.id %}' pk = {{item.id}}> {{ item.title }}</a></td>
+                    <td><progress class="progress is-small is-info" value="{{ item.get_progress }}" max="100"></progress></td>
+                    <td>{{ item.get_progress|floatformat:"0"}}%</td>
+                </tr>
+
+
+                {% endif %}
+                {% endfor %}
+{% else %}
+                <tr>
+                    <td>1. <a href='{% url "project_detail" guest_view.id %}'>To Do List for the To Do App</a></td>
+                    <td><progress class="progress is-small is-info" value="{{ guest_view.get_progress }}" max="100"></progress></td>
+                    <td>{{ guest_view.get_progress|floatformat:"0"}}%</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{%endblock content %}

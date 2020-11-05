@@ -23,10 +23,9 @@
                         {% else %}
                         <div class = "columns">
                             <div class = "column">
-                                
-                                
                                 Already a member? Sign in to see your to do lists!
-                                <br>                    <br>
+                                <br>                    
+                                <br>
                                 <div class="buttons is-centered">
                                     <a class="button is-primary" href="{% url 'login' %}" >Log In</a>
                                 </div>
@@ -39,22 +38,34 @@
                                 </div>
                             </div>
                         </div>
+                        <br>
+                        <!-- <br>
+                        <div class="buttons is-centered">
+                            <a class="button is-dark" href="{% url 'guest_login' %}" >View As A Guest</a>
+                        </div> -->
                         {% endif %}
+
                     </div>
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    {%endblock content %}
-                    
+                    <br><br>
+                </section>
+               <div class ="section">
+                   <center>
+
+                    <h4 class="title is-4"> Or click "Tasks" and "Projects" above to see the tasks completed to make this app!</h4>
+
+                   </center>
+               </div> 
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                {%endblock content %}
+                

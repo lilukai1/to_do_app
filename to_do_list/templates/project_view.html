@@ -6,7 +6,7 @@
   <div class ="container">
       <div class = "box">
           <h3 class="title is-3">"{{ project.title }}"</h3> <br>
-          <progress class="progress is-large is-info" value="{{ project.get_progress }}" max="{{ 1 }}">{{ project.get_progress }} </progress><br>
+          <progress class="progress is-large is-info" value="{{ project.get_progress }}" max="100">{{ project.get_progress|floatformat:"0"}}%</progress><br>
           <section class = "section">
               <div class="columns">
                   <div class="column">
@@ -14,13 +14,19 @@
                           <table class="table">
                               <thead>
                                   <tr>
-                                      <th>These need done before this project can be completed:</th>
+                                    <th colspan="2">These need done before this project can be completed:</th>
                                   </tr>
                               </thead>
                               <tbody>
                                   {% for p in project_tasks %} 
                                   {% if p.completed == False %} 
-                                <tr>
+                                <tr>                                  <td>
+                                    <a class="button is-white"  input type ="submit" href='{% url "toggle_checkmark" p.id %}'>
+                                        <span class="icon has-text-danger">
+                                            <i class="fas fa-ban"></i>
+                                        </span>
+                                    </a>
+                                </td>
                                   <td><a  href='{% url  "task_detail" p.id %}'>{{ p.title }}</a> </td>
                                   </tr>                            
                                   {% endif %}
@@ -35,13 +41,20 @@
                           <table class="table">
                               <thead>
                                   <tr>
-                                      <th>These tasks have been completed:</th>
+                                    <th colspan="2">These tasks have been completed:</th>
                                   </tr>
                               </thead>
                               <tbody>
                                   {% for p in project_tasks %}
                                   {% if p.completed  %} 
                                   <tr>
+                                    <td>
+                                        <a class="button is-white"  input type ="submit" href='{% url "toggle_checkmark" p.id %}'>
+                                            <span class="icon has-text-success">
+                                                <i class="fas fa-check-square"></i>
+                                            </span>
+                                        </a>
+                                    </td>
                                     <td><a  href='{% url  "task_detail" p.id %}'>{{ p.title }}</a> </td>
                                   </tr>
                                   {% endif %}

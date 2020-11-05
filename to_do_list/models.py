@@ -24,19 +24,31 @@ def opposite_status(status):
 
 class Project(models.Model):
     title = models.CharField(max_length=50)
-    description = models.TextField()
+    description = models.TextField(default=None, null=True, blank=True)
+    person = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    time_began = models.DateTimeField(default=timezone.now)
+    time_ended = models.DateTimeField(null=True, blank=True, default=None)
 
     def __str__(self):
         return(self.title)
+    
+    class Meta:
+        ordering = ['title', 'time_began']
+
 
     def get_absolute_url(self):
-        return reverse('task_detail', kwargs={'pk': self.pk})    
+        return reverse('project_detail', kwargs={'pk': self.pk})    
 
     def get_progress(self):
         tasks = Task.objects.filter(project=self)
         progress_completed= sum([task.completed for task in tasks])
         progress_max= tasks.count()
-        return(progress_completed/progress_max)
+        if progress_completed>0:
+            completed= progress_completed/progress_max
+        else:
+            completed = 0
+        return(completed*100)
+        
 
 class Task(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True, related_name="children", related_query_name="kids")
@@ -56,7 +68,7 @@ class Task(models.Model):
         return reverse('task_detail', kwargs={'pk': self.pk})
 
     class Meta:
-        ordering = ['completed','priority', 'title']
+        ordering = ['completed', 'project', 'priority', 'title']
 
     def add_relationship(self, task, status, symm=True):
         relationship, created = TaskRelationship.objects.get_or_create(

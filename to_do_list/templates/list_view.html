@@ -7,6 +7,7 @@
             <tr>
                 <h2 class="title-is-2">
                     <th></th>
+                    <th></th>
                     <th>Task</th>
                     <th>Started On</th>
                     <th>Finished On</th>
@@ -16,38 +17,67 @@
             </tr>
         </thead>
         <tbody>
-            {% for item in task_list %}
-            {% if user == item.person %}
+            {% if user.is_authenticated %}
+            {% for project in all_projects %}
+                <th rowspan={{project.children.select_related|length}}><h5 class='title is-5'>{{project.title}}</h5></th>
+                {% for item in project.children.select_related %}
+                {% if user == item.person %}
+                        <td>
+                            {% if item.completed %}
+                            <a class="button is-white"  input type ="submit" href='{% url "toggle_checkmark" item.id %}' pk = {{item.id}}>
+                                <span class="icon has-text-success">
+                                    <i class="fas fa-check-square"></i>
+                                </span>
+                            </a>
+                            {% else %}
+                            <a class="button is-white"  input type ="submit" href='{% url "toggle_checkmark" item.id %}' pk = {{item.id}}>
+                                <span class="icon has-text-danger">
+                                    <i class="fas fa-ban"></i>
+                                </span>
+                            </a>
+                            {%endif%}
+                        </td>
+                            
+                        <td>{{forloop.counter}}. <a href='{% url "task_detail" item.id %}' pk = {{item.id}}> {{ item.title }}</a></td>
+                        <td>{{ item.time_began}}</td>
+                        <td>{{ item.time_ended}}</td>
+                        <td> <a class="button is-success"  value="Edit Task" href='{% url "edit_task" item.id %}' pk = {{item.id}}>Edit Task</a>     </td>
+                        <td> <a class="button is-warning"  value="Delete Task" href='{% url "delete_task" item.id %}' pk = {{item.id}}>Delete Task</a> </td> 
+                    
+                    {% endif %}
+                </tr>
+
+                {% endfor %}
+
+                {% endfor %}
+            {% else %}
+            {% for item in guest_view %}
+
             <tr>
                 <td>
-                    {% if item.completed %}
-                    <a class="button is-white"  input type ="submit" href='{% url "toggle_checkmark" item.id %}' pk = {{item.id}}>
-                        <span class="icon has-text-success">
-                            <i class="fas fa-check-square"></i>
-                        </span>
-                    </a>
-                    {% else %}
-                    <a class="button is-white"  input type ="submit" href='{% url "toggle_checkmark" item.id %}' pk = {{item.id}}>
-                        <span class="icon has-text-danger">
-                            <i class="fas fa-ban"></i>
-                        </span>
-                    </a>
-                    {%endif%}
+                {% if item.completed %}
+                    <span class="icon has-text-success">
+                        <i class="fas fa-check-square"></i>
+                    </span>
+                {% else %}
+                    <span class="icon has-text-danger">
+                        <i class="fas fa-ban"></i>
+                    </span>
+                {%endif%}
                 </td>
-                
                 <td>{{forloop.counter}}. <a href='{% url "task_detail" item.id %}' pk = {{item.id}}> {{ item.title }}</a></td>
                 <td>{{ item.time_began}}</td>
                 <td>{{ item.time_ended}}</td>
-                <td> <a class="button is-success"  value="Edit Task" href='{% url "edit_task" item.id %}' pk = {{item.id}}>Edit Task</a>     </td>
-                <td> <a class="button is-warning"  value="Delete Task" href='{% url "delete_task" item.id %}' pk = {{item.id}}>Delete Task</a> </td> 
-            </tr>
-            {% endif %}
+                <td> <a class="button is-success"  value="Edit Task" disabled=True>Edit Task</a>     </td>
+                <td> <a class="button is-warning"  value="Delete Task" disabled=True>Delete Task</a> </td> 
             {% endfor %}
-        </tbody>
-    </table>
+            {% endif %}
+    </tbody>
+</table>
 </div>
 <br>
 <br>
+<!-- 
 
 <div class="container">
     <nav class="pagination is-centered" role="navigation" aria-label="pagination">
@@ -67,6 +97,6 @@
             {% endif %}
         </span>
     </nav>
-</div>
+</div> -->
 
 {%endblock content %}

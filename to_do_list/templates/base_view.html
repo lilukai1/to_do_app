@@ -19,7 +19,7 @@
 
 <nav class="navbar is-light" role="navigation" aria-label="main navigation" >
     <div class="navbar-brand">
-        <a class="navbar-item" href="{% url 'list_view' %}">
+        <a class="navbar-item" href="{% url 'index' %}">
             <img src={% static 'accounts/img/logo.png' %} width="50" height="50">
         </a>  
     </div>
@@ -27,7 +27,6 @@
     <div id="to_do_main_navbar" class="navbar-menu is-active">
         <div class="navbar-start">
             <div class="navbar-item">
-                {% if user.is_authenticated %}
                 <p> Hi, {{user}}</p>
             </div>            
             <div class="navbar-item">
@@ -46,6 +45,7 @@
                 </a>  
             </div>     
         </div>
+        {% if user.is_authenticated %}
         <div class="navbar-end">              
             <div class="navbar-item">
                 <div class="buttons">
@@ -55,9 +55,9 @@
                 </div>
             </div>
         </div>
+        {%endif %}
     </div>
 </div>
-{% endif %}
 
 </nav>
 <div class = "container">

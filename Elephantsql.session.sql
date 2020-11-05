@@ -1,4 +1,4 @@
-UPDATE "to_do_list_task" SET person_id=6
+UPDATE "to_do_list_project" SET person_id=6
 
 -- delete from "to_do_list_taskrelationship"
 -- where relationship_status='project'
