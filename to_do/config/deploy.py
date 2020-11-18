@@ -130,7 +130,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'to_do_list',
     'accounts',
-    'crispy_forms',    
+    'crispy_forms',
+    'resume',  
+
 ]
 
 db_from_env = dj_database_url.config(conn_max_age=600)

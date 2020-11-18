@@ -1,4 +1,4 @@
-{% extends "base_view.html" %}
+{% extends "to_do/base_view.html" %}
 <br>
 {% block content %}
 <br>
@@ -8,46 +8,49 @@
     {% if editing_task %}
     <div class ="container">
         <div class = "box">
-            <h3 class="title is-3">"{{ editing_project.title }}"</h3> <br>
+            <h3 class="title is-3">"{{ editing_task.title }}"</h3> <br>
+            <h4 class="subtitle is-4">Started on: {{ editing_task.time_began }}</h4>
+            {% if editing_task.time_ended != None %}
+            <h4 class="subtitle is-4 pulled-right"> Finished on {{editing_task.time_ended}}</h4>
             <br>
             {% endif %}
             
-<!-- <class section = "relationship editing multiselect">
-    <div class = "box">
-        {% for value, text in form.providers.field.choices %}
-        <div class="ui slider checkbox">
-          <input id="id_providers_{{ forloop.counter0 }}" name="{{ form.providers.name }}" type="checkbox" value="{{ value }}"{% if value in checked_providers %} checked="checked"{% endif %}>
-          <label>{{ text }}</label>
-        </div>
-      {% endfor %}
-
-    </div>
-</class> -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            <!-- <class section = "relationship editing multiselect">
+                <div class = "box">
+                    {% for value, text in form.providers.field.choices %}
+                    <div class="ui slider checkbox">
+                        <input id="id_providers_{{ forloop.counter0 }}" name="{{ form.providers.name }}" type="checkbox" value="{{ value }}"{% if value in checked_providers %} checked="checked"{% endif %}>
+                        <label>{{ text }}</label>
+                    </div>
+                    {% endfor %}
+                    
+                </div>
+            </class> -->
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             
             {% if editing_relationships %}
-
+            
             <section class = "section">
                 <div class="columns">
                     <div class="column is-half">
@@ -102,37 +105,53 @@
                     </div>
                 </div>
                 {% else %}
-
+                
                 <section class = "section">
                     <p> No relationships to other tasks.</p>
                 </section>
                 {% endif %}
             </div>
-{% endif %}
-{% load crispy_forms_tags %}
+            {% endif %}
+            {% load crispy_forms_tags %}
             <div class = "box">
                 <form action = "" method = "post"> 
                     {% csrf_token %} 
                     <div class= "columns">
                         <div class = "column">
-                            {{ add_project_form|crispy }} 
+                            {{ form |crispy}}
+                            {{ add_task_form|crispy }} 
                         </div>
                         <div class = "column">
+                            {{ project|crispy }}
+                            <br>
                             {{ relationship_form|crispy }}
                         </div>
                     </div>
-                    <input class="button is-primary" input type="submit" value="Submit">
-                    {% if editing_task %}
+                    {% if user.is_authenticated %}
                     
-                    {% if task.complete %}
-                    <a class="button is-success" href='{% url "toggle_checkmark" editing_task.id %}'>Mark Not Done</a>
+                        <input class="button is-primary" input type="submit" value="Submit">
+                        {% if editing_task %}
+                            {% if user == task.person %}
+                                {% if task.complete %}
+                                    <a class="button is-success" href='{% url "toggle_checkmark" editing_task.id %}'>Mark Not Done</a>
+                                {% else %}
+                                    <a class="button is-warning" href='{% url "toggle_checkmark" editing_task.id %}'>Mark Done</a>
+                                {% endif %}
+                                <a class="button is-danger is-pulled-right" href='{% url "delete_task" editing_task.id %}'>Delete</a> 
+                            {% else %}
+                                {% if task.complete %}
+                                     <a class="button is-success" disabled=True>Mark Not Done</a>
+                                {% else %}
+                                    <a class="button is-warning" disabled=True>Mark Done</a>
+                                {% endif %}
+                                <a class="button is-danger is-pulled-right" disabled=True>Delete</a> 
+                            {% endif %}
+                        {% endif %}
                     {% else %}
-                    <a class="button is-warning" href='{% url "toggle_checkmark" editing_task.id %}'>Mark Done</a>
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <input class="button is-primary" disabled=True value="Submit">
                     {% endif %}
-                    <a class="button is-danger is-pulled-right" href='{% url "delete_task" editing_task.id %}'>Delete Task</a> 
-
-                    {% endif %}
-                </form> 
+                        </form> 
             </div>
             
             
@@ -141,9 +160,10 @@
             
             
             
-    </div>
-
-</section>
-
-{%endblock content %}
-
+        </div>
+        
+    </section>
+    
+    {%endblock content %}
+    
+    
