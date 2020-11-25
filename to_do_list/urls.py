@@ -9,8 +9,6 @@ from to_do_list.views import (AllTasksList, DetailTaskView, base_view, ProjectDe
 from . import views
 
 urlpatterns = [
-    # path('', index_view, name='index'),
-    # path('tasks/index/', index_view, name='index'),
     path('index/', index_view, name='to_do_index'),
     path('tasks/list/', AllTasksList.as_view(template_name='to_do/list_view.html'), name='list_view'),
     path('tasks/add/', CreateTaskView.as_view(template_name="to_do/add_task_view.html"), name='add_task'),
