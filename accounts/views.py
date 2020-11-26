@@ -27,4 +27,4 @@ def guest_login(request):
     guest = User.objects.get(pk=7)
     user = authenticate(request, username="guest", password="iamaguest")
     login(request, user)
-    return HttpResponseRedirect("/")
+    return HttpResponseRedirect("to_do/index/")

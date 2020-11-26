@@ -55,6 +55,16 @@
                 </div>
             </div>
         </div>
+        {% else %}
+        <div class="navbar-end">              
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a class="button is-dark" href='{% url "to_do_index" %}'>
+                        To Do Home 
+                    </a>
+                </div>
+            </div>
+        </div>
         {%endif %}
     </div>
 </div>

@@ -103,9 +103,9 @@ STATICFILES_DIRS = [
 ]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
-SIGNUP_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = "/to_do/index/"
+LOGOUT_REDIRECT_URL = "/to_do/index/"
+SIGNUP_REDIRECT_URL = "/to_do/index/"
 AUTH_USER_MODEL = 'accounts.Account'  ## please refer to https://learndjango.com/tutorials/django-best-practices-referencing-user-model
 
 FIXTURE_DIRS =[
