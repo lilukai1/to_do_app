@@ -145,6 +145,8 @@ INSTALLED_APPS = [
     'accounts',
     'crispy_forms',
     'resume',  
+    'psmf_calculator',
+
 
 ]
 
