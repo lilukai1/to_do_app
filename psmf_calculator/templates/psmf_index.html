@@ -1,0 +1,25 @@
+{% extends "to_do/base_view.html" %}
+<br>
+{% block content %}
+<div class = "container">
+
+            {% if user.is_authenticated %}
+            {% for key in stats %}
+            <li>{{key.person}}</li>
+            <li>BMI: {{key.get_bmi|floatformat:1}}</li>
+            <li>BodyFat: {{key.get_bodyfat|floatformat:2}}%</li>
+            <li>LBM: {{key.get_lbm|floatformat:1}}</li>
+            <br>
+            <li>Diet Category: {{key.get_category}}</li>
+            <li>Protein Per Day: {{key.get_protein_per_day|floatformat:"0"}}</li>
+
+                {% endfor %}
+            {% else %}
+            {% endif %}
+           
+</div>
+<br>
+<br>
+
+
+{%endblock content %}

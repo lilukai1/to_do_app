@@ -16,3 +16,4 @@ admin.site.register(Project)
 
 class Project(admin.StackedInline):
     model=Project
+

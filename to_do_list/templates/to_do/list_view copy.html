@@ -1,0 +1,102 @@
+{% extends "to_do/base_view.html" %}
+<br>
+{% block content %}
+<div class = "container">
+    <table class="table is-fullwidth is-hoverable">
+        <thead>
+            <tr>
+                <h2 class="title-is-2">
+                    <th></th>
+                    <th>Completed?</th>
+                    <th>Task</th>
+                    <th>Started On</th>
+                    <th>Finished On</th>
+                    <th></th>
+                    <th></th>
+                </h2>
+            </tr>
+        </thead>
+        <tbody>
+            {% if user.is_authenticated %}
+            {% for project in personal_projects %}
+                <th rowspan={{project.children.select_related|length }} +1><h5 class='title is-5'>{{project.title}}</h5></th>
+                {% for item in project.children.select_related %}
+                {% if user == item.person %}
+                        <td>
+                            {% if item.completed %}
+                            <a class="button is-white"  input type ="submit" href='{% url "toggle_checkmark" item.id %}' pk = {{item.id}}>
+                                <span class="icon has-text-success">
+                                    <i class="fas fa-check-square"></i>
+                                </span>
+                            </a>
+                            {% else %}
+                            <a class="button is-white"  input type ="submit" href='{% url "toggle_checkmark" item.id %}' pk = {{item.id}}>
+                                <span class="icon has-text-danger">
+                                    <i class="fas fa-ban"></i>
+                                </span>
+                            </a>
+                            {%endif%}
+                        </td>
+                            
+                        <td><a href='{% url "task_detail" item.id %}' pk = {{item.id}}> {{ item.title }}</a></td>
+                        <td>{{ item.time_began}}</td>
+                        <td>{{ item.time_ended}}</td>
+                        <td> <a class="button is-success"  value="Edit Task" href='{% url "edit_task" item.id %}' pk = {{item.id}}>Edit Task</a>     </td>
+                        <td> <a class="button is-warning"  value="Delete Task" href='{% url "delete_task" item.id %}' pk = {{item.id}}>Delete Task</a> </td> 
+                    
+                    {% endif %}
+                </tr>
+
+                {% endfor %}
+
+                {% endfor %}
+            {% else %}
+            {% for item in guest_view %}
+
+            <tr>
+                <td>
+                {% if item.completed %}
+                    <span class="icon has-text-success">
+                        <i class="fas fa-check-square"></i>
+                    </span>
+                {% else %}
+                    <span class="icon has-text-danger">
+                        <i class="fas fa-ban"></i>
+                    </span>
+                {%endif%}
+                </td>
+                <td><a href='{% url "task_detail" item.id %}' pk = {{item.id}}> {{ item.title }}</a></td>
+                <td>{{ item.time_began}}</td>
+                <td>{{ item.time_ended}}</td>
+                <td> <a class="button is-success"  value="Edit Task" disabled=True>Edit Task</a>     </td>
+                <td> <a class="button is-warning"  value="Delete Task" disabled=True>Delete Task</a> </td> 
+            {% endfor %}
+            {% endif %}
+    </tbody>
+</table>
+</div>
+<br>
+<br>
+<!-- 
+
+<div class="container">
+    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+            <a class="pagination-link" href="?page=1">&laquo; first</a>
+            <a class="pagination-previous" href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+            
+            <span class="pagination-link is-current" aria-label="Current" aria-current="page">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+            
+            {% if page_obj.has_next %}
+            <a class="pagination-next" href="?page={{ page_obj.next_page_number }}">next</a>
+            <a class="pagination-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </nav>
+</div> -->
+
+{%endblock content %}

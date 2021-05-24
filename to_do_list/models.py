@@ -48,10 +48,15 @@ class Project(models.Model):
         else:
             completed = 0
         return(completed*100)
+    
+    def get_tasklist(self):
+        empty = Task.objects.filter(project=self)
+        # empty = Task.objects.filter(project=self)
+        return empty
         
 
 class Task(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True, related_name="children", related_query_name="kids")
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True, related_name="children", related_query_name="parent")
     title = models.CharField(max_length=100)
     description = models.TextField(default="", blank=True, null = True, max_length=200)
     completed = models.BooleanField(default=False)

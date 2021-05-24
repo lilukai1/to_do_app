@@ -4,132 +4,38 @@
 <br>
 
 
-<section class = "add_task">
-    {% if editing_task %}
+<section class = "add_project">
+    {% if editing_project %}
     <div class ="container">
         <div class = "box">
             <h3 class="title is-3">"{{ editing_project.title }}"</h3> <br>
+            <h4 class="subtitle is-4">Started on: {{ editing_project.description }}</h4>
+            {% if editing_project.time_ended != None %}
+            <h4 class="subtitle is-4 pulled-right"> Finished on {{editing_project.time_ended}}</h4>
             <br>
             {% endif %}
-            
-<!-- <class section = "relationship editing multiselect">
-    <div class = "box">
-        {% for value, text in form.providers.field.choices %}
-        <div class="ui slider checkbox">
-          <input id="id_providers_{{ forloop.counter0 }}" name="{{ form.providers.name }}" type="checkbox" value="{{ value }}"{% if value in checked_providers %} checked="checked"{% endif %}>
-          <label>{{ text }}</label>
-        </div>
-      {% endfor %}
-
-    </div>
-</class> -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            
-            {% if editing_relationships %}
-
-            <section class = "section">
-                <div class="columns">
-                    <div class="column is-half">
-                        <div class = "box">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>These need done before this task can be completed:</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for task in before_tasks %} 
-                                    {% if task.completed != True %} 
-                                    <td><a  href='{% url  "task_detail" task.target_task_id %}'>{{ task.target_task }}</a> </td>
-                                    <br>
-                                    {% endif %}
-                                    {% endfor %}
-                                </tbody>
-                                </table
-                            </div>
-                        </div>
-                    </div>
-                    <div class="column">
-                        <div class = "box">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>These can be done when this task is completed:</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for task in after_tasks %} 
-                                    <tr>
-                                        <td>                      
-                                            {% if task.current_task %}
-                                            <span class="icon has-text-success">
-                                                <i class="fas fa-check-square"></i>
-                                            </span>
-                                            {% else %}
-                                            <span class="icon has-text-danger">
-                                                <i class="fas fa-ban"></i>
-                                            </span>
-                                        </td>
-                                        {%endif%}
-                                        <td> <a  href='{% url  "task_detail" task.target_task_id %}'>{{task.target_task}}</a> </td> 
-                                        <br>
-                                    </tr>
-                                    {%endfor%}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                {% else %}
-
-                <section class = "section">
-                    <p> No relationships to other tasks.</p>
-                </section>
-                {% endif %}
-            </div>
-{% endif %}
+       {%endif%}             
+       
 {% load crispy_forms_tags %}
             <div class = "box">
                 <form action = "" method = "post"> 
                     {% csrf_token %} 
                     <div class= "columns">
                         <div class = "column">
+                            {{ form |crispy}}
+
                             {{ add_project_form|crispy }} 
-                        </div>
-                        <div class = "column">
-                            {{ relationship_form|crispy }}
                         </div>
                     </div>
                     <input class="button is-primary" input type="submit" value="Submit">
-                    {% if editing_task %}
+                    {% if editing_project %}
                     
-                    {% if task.complete %}
-                    <a class="button is-success" href='{% url "toggle_checkmark" editing_task.id %}'>Mark Not Done</a>
+                    {% if project.complete %}
+                    <a class="button is-success" href='{% url "toggle_checkmark" editing_project.id %}'>Mark Not Done</a>
                     {% else %}
-                    <a class="button is-warning" href='{% url "toggle_checkmark" editing_task.id %}'>Mark Done</a>
+                    <a class="button is-warning" href='{% url "toggle_checkmark" editing_project.id %}'>Mark Done</a>
                     {% endif %}
-                    <a class="button is-danger is-pulled-right" href='{% url "delete_task" editing_task.id %}'>Delete Task</a> 
+                    <a class="button is-danger is-pulled-right" href='{% url "delete_project" editing_project.id %}'>Delete project</a> 
 
                     {% endif %}
                 </form> 

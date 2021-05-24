@@ -1,10 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from to_do_list.models import Task, TaskRelationship, Project
 from django.contrib.auth import get_user_model, login
 from django.contrib.auth.decorators import login_required
 from .forms import (CompletedCheck, AddTaskForm, EditTask, RelationshipInlineFormSet, inlineformset_factory, 
-     RelationshipForm) #ProjectForm, ProjectInlineFormSet,
+     RelationshipForm, AddProjectForm) #ProjectForm, ProjectInlineFormSet,
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .mixins import RedirectToPreviousMixin
@@ -28,18 +28,23 @@ class AllTasksList(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['personal_projects'] = Project.objects.filter(person=self.request.user)
         context["page_title"] = "All Tasks"    
         context['guest_project'] = Project.objects.get(id=1)
         context['guest_view'] = Task.objects.filter(project=context['guest_project'])
         return context
 
-
 class ProjectList(ListView):
     model = Project
     context_object_name = 'project_list'
 
+    # def get_list(self):
+    #     list_check = Project.objects.get_list_or_404(person=self)
+    #     return list_check
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['project_empty'] = len(Project.objects.filter(person=self.request.user))
         context["page_title"] = "All Projects"
         context['guest_view'] = Project.objects.get(id=1)
         return context
@@ -79,6 +84,19 @@ class CreateTaskView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
 
     def get_success_message(self, cleaned_data):
         return "Task created!"
+
+
+class CreateProjectView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
+    model=Project
+    context_object_name='add_project'
+    fields =['title', 'description']
+
+    def form_valid(self, form):
+        form.instance.person = self.request.user
+        return super(CreateProjectView, self).form_valid(form)
+
+    def get_success_message(self, cleaned_data):
+        return "Project created!"
 
 
 class EditTaskView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
@@ -145,6 +163,7 @@ def project_view(request, pk):
     for task in project_tasks:
         if task.completed:
             progress_bar += 1
+    print(len(project_tasks))
     context = {
         'project': project,
         "page_title" : f"{project.title}",
@@ -152,6 +171,9 @@ def project_view(request, pk):
         "project_tasks": project_tasks,
         "progress_bar": len(project_tasks),
         "progress_completed": progress_bar,
-    }
+        "project_empty": len(project_tasks)
+            }
 
     return render(request, 'to_do/project_view.html', context) 
+
+# @login_required(login_url="/accounts/login/")

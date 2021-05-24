@@ -3,24 +3,35 @@
 {% block content %}
 <div class = "container">
     <center>                
-        <h2 class="title is-2">Project</h2>
+        <h2 class="title is-2">Projects</h2>
         <br>
     </center>
+
     <div class = "box">
         <table class="table is-fullwidth is-hoverable">
             <thead>
             </thead>
             <tbody>
+                
                 {% if user.is_authenticated %}
+                {% if project_empty == 0 %}
+                <th> You have no personal projects! </th>
 
+
+                    {%endif%}
+                    <tr>
+                        <td>--- <a href='{% url "project_detail" guest_view.id %}'>To Do List for the To Do App</a> ---</td>
+                        <td><progress class="progress is-small is-info" value="{{ guest_view.get_progress }}" max="100"></progress></td>
+                        <td>{{ guest_view.get_progress|floatformat:"0"}}%</td>
+                    </tr>
                 {% for item in project_list %}
                 {% if user == item.person %}
+
                 <tr>
-                    <td>{{forloop.counter}}. <a href='{% url "project_detail" item.id %}' pk = {{item.id}}> {{ item.title }}</a></td>
+                    <td> <a href='{% url "project_detail" item.id %}' pk = {{item.id}}> {{ item.title }}</a></td>
                     <td><progress class="progress is-small is-info" value="{{ item.get_progress }}" max="100"></progress></td>
                     <td>{{ item.get_progress|floatformat:"0"}}%</td>
                 </tr>
-
 
                 {% endif %}
                 {% endfor %}
@@ -33,7 +44,11 @@
                 {% endif %}
             </tbody>
         </table>
+
     </div>
+<center>
+            <a href='{% url "add_project" %}' class="button is-success">Add Project </a>
+
 </div>
 
 {%endblock content %}

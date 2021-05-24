@@ -31,6 +31,26 @@ class AddTaskForm(forms.ModelForm):
     def clean(self):
         person = self.person
         self.cleaned_data.update({'person':person})
+
+
+class AddProjectForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ['title', 'time_began', 'description']
+
+    def __init__(self, *args, **kwargs):
+        person = kwargs.pop('person')
+        self.person = person
+        super(AddTaskForm, self).__init__(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        self.instance.person = self.person
+        task = super(AddTaskForm, self).save(*args, **kwargs)
+        return task
+
+    def clean(self):
+        person = self.person
+        self.cleaned_data.update({'person':person})
    
 class UpdateTaskForm(forms.ModelForm):
     class Meta:

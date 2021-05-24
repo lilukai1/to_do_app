@@ -33,7 +33,20 @@ ALLOWED_HOSTS = [
 
 # Application definition
 
-
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'to_do_list',
+    'accounts',
+    'crispy_forms',   
+    'debug_toolbar',
+    'psmf_calculator',
+    'resume', 
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

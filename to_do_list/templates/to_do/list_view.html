@@ -1,58 +1,65 @@
 {% extends "to_do/base_view.html" %}
 <br>
 {% block content %}
-<div class = "container">
+<div class = "container"> 
+    {% if user.is_authenticated %}
+    {% for pjs in personal_projects %} 
+
     <table class="table is-fullwidth is-hoverable">
-        <thead>
+        {{pjs.title}}
+    <thead>
+
+        <tr>
+                <th></th>
+                <th>Completed?</th>
+                <th>Task</th>
+                <th>Started On</th>
+                <th>Finished On</th>
+                <th></th>
+                <th></th>
+        </tr>
+    </thead>    
+    <tbody>
+            {% for item in pjs.children.select_related %}
             <tr>
-                <h2 class="title-is-2">
-                    <th></th>
-                    <th></th>
-                    <th>Task</th>
-                    <th>Started On</th>
-                    <th>Finished On</th>
-                    <th></th>
-                    <th></th>
-                </h2>
+                <th id="counter"><p>{{ forloop.counter }}</p></th>
+            <th id="completed"><p>
+                {% if item.completed %}
+                <a class="button is-white"  input type ="submit" href='{% url "toggle_checkmark" item.id %}' pk = {{item.id}}>
+                    <span class="icon has-text-success">
+                        <i class="fas fa-check-square"></i>
+                    </span>
+                </a>
+                {% else %}
+                <a class="button is-white"  input type ="submit" href='{% url "toggle_checkmark" item.id %}' pk = {{item.id}}>
+                    <span class="icon has-text-danger">
+                        <i class="fas fa-ban"></i>
+                    </span>
+                </a>
+                {%endif%}
+            </p></th>
+            <th id="detail"><p><a href='{% url "task_detail" item.id %}' pk = {{item.id}}> {{ item.title }}</p></th>
+                <th id="began"><p>{{ item.time_began}}</p></th>
+
+                <th id="ended"><p>{{ item.time_ended}}</p></th>
+
+                <th> <a class="button is-success"  value="Edit Task" href='{% url "edit_task" item.id %}' pk = {{item.id}}>Edit Task</a>     </td>
+                <th> <a class="button is-warning"  value="Delete Task" href='{% url "delete_task" item.id %}' pk = {{item.id}}>Delete Task</a> </td> 
+            
             </tr>
-        </thead>
-        <tbody>
-            {% if user.is_authenticated %}
-            {% for project in all_projects %}
-                <th rowspan={{project.children.select_related|length}}><h5 class='title is-5'>{{project.title}}</h5></th>
-                {% for item in project.children.select_related %}
-                {% if user == item.person %}
-                        <td>
-                            {% if item.completed %}
-                            <a class="button is-white"  input type ="submit" href='{% url "toggle_checkmark" item.id %}' pk = {{item.id}}>
-                                <span class="icon has-text-success">
-                                    <i class="fas fa-check-square"></i>
-                                </span>
-                            </a>
-                            {% else %}
-                            <a class="button is-white"  input type ="submit" href='{% url "toggle_checkmark" item.id %}' pk = {{item.id}}>
-                                <span class="icon has-text-danger">
-                                    <i class="fas fa-ban"></i>
-                                </span>
-                            </a>
-                            {%endif%}
-                        </td>
-                            
-                        <td>{{forloop.counter}}. <a href='{% url "task_detail" item.id %}' pk = {{item.id}}> {{ item.title }}</a></td>
-                        <td>{{ item.time_began}}</td>
-                        <td>{{ item.time_ended}}</td>
-                        <td> <a class="button is-success"  value="Edit Task" href='{% url "edit_task" item.id %}' pk = {{item.id}}>Edit Task</a>     </td>
-                        <td> <a class="button is-warning"  value="Delete Task" href='{% url "delete_task" item.id %}' pk = {{item.id}}>Delete Task</a> </td> 
-                    
-                    {% endif %}
-                </tr>
+
+                {%endfor%}
 
                 {% endfor %}
+                </tbody>
+            </table>
+            </div>
+            <br><br>
+            {%endif%}
 
-                {% endfor %}
-            {% else %}
             {% for item in guest_view %}
-
+<table>
+    <tbody>
             <tr>
                 <td>
                 {% if item.completed %}
@@ -65,13 +72,12 @@
                     </span>
                 {%endif%}
                 </td>
-                <td>{{forloop.counter}}. <a href='{% url "task_detail" item.id %}' pk = {{item.id}}> {{ item.title }}</a></td>
+                <td><a href='{% url "task_detail" item.id %}' pk = {{item.id}}> {{ item.title }}</a></td>
                 <td>{{ item.time_began}}</td>
                 <td>{{ item.time_ended}}</td>
                 <td> <a class="button is-success"  value="Edit Task" disabled=True>Edit Task</a>     </td>
                 <td> <a class="button is-warning"  value="Delete Task" disabled=True>Delete Task</a> </td> 
             {% endfor %}
-            {% endif %}
     </tbody>
 </table>
 </div>

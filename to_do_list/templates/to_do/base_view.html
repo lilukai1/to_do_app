@@ -28,7 +28,12 @@
         <div class="navbar-start">
             <div class="navbar-item">
                 <p> Hi, {{user}}</p>
-            </div>            
+            </div>    
+            <div class="navbar-item">
+                <a class="navbar-item" href="{% url 'list_view' %}">
+                    Task Lists
+                </a>
+            </div>        
             <div class="navbar-item">
                 <a class="navbar-item" href="{% url 'add_task' %}">
                     Add a Task
@@ -39,11 +44,14 @@
                     Projects
                 </a>
             </div>
+            {% if not user.is_authenticated %}
+
             <div class="navbar-item">
                 <a class="navbar-item" href ='{% url "list_view" %}'> 
                     Tasks
                 </a>  
-            </div>     
+            </div>    
+            {% endif %} 
         </div>
         {% if user.is_authenticated %}
         <div class="navbar-end">              

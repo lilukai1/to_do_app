@@ -24,4 +24,6 @@ urlpatterns = [
     path('__debug__/', include(debug_toolbar.urls)),
     path('accounts/', include('django.contrib.auth.urls'), name='accounts'),
     path('', include('resume.urls')),
+    path('psmf/', include('psmf_calculator.urls')),
+
 ]
