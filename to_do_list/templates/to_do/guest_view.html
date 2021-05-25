@@ -1,10 +1,9 @@
-{% extends "to_do/list_view.html" %}
 <br>
 {% block guest_view %}
-this is guest view
 <div class = "container"> 
-    <table class="table is-fullwidth is-hoverable">
-        {{pjs.title}}
+    <table class="table is-fullwidth is-bordered is-hoverable">
+        <caption><h3 class="title is-h3">Public Projects -- {{guest_project.title}}</h3></caption>
+
         <thead>
     
             <tr>
@@ -18,7 +17,7 @@ this is guest view
             </tr>
         </thead>    
         <tbody>
-            {% for item in guest_view.children.select_related %}
+            {% for item in guest_project.children.select_related %}
 
                 <tr>
                     <td>

@@ -21,7 +21,7 @@
                                   {% for p in project_tasks %} 
                                   {% if p.completed == False %} 
                                 <tr>                                  <td>
-                                    <a class="button is-white"  input type ="submit" href='{% url "toggle_checkmark" p.id %}'>
+                                    <a class="button is-white"  input type ="submit" disabled=True href='{% url "toggle_checkmark" p.id %}'>
                                         <span class="icon has-text-danger">
                                             <i class="fas fa-ban"></i>
                                         </span>
@@ -49,7 +49,7 @@
                                   {% if p.completed  %} 
                                   <tr>
                                     <td>
-                                        <a class="button is-white"  input type ="submit" href='{% url "toggle_checkmark" p.id %}'>
+                                        <a class="button is-white"  input type ="submit" disabled=True href='{% url "toggle_checkmark" p.id %}'>
                                             <span class="icon has-text-success">
                                                 <i class="fas fa-check-square"></i>
                                             </span>

@@ -2,9 +2,9 @@
 <br>
 {% block content %}
 <div class="container">
-    
     {% if user.is_authenticated %}
     {% for pjs in personal_projects %}
+    <center><h2 class="title is-h2"> Personal Projects</h2></center>
         <table class="table is-fullwidth is-hoverable is-bordered">
             <thead>
                 <caption><h3 class="title is-3">{{pjs.title}}</h3></caption>
@@ -68,8 +68,11 @@
 </div>
 <br><br>
 
+<!-- {% block guest_view %}
+{% endblock guest_view %} -->
 {%endif%}
+
+{% include "to_do/guest_view.html" %}
 {%endblock content %}
 
-{% block guest_view %}
-{% endblock guest_view %}
+

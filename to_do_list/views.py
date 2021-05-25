@@ -29,7 +29,6 @@ class AllTasksList(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['personal_projects'] = Project.objects.filter(person=self.request.user)
-        print(Project.objects.filter(person=self.request.user))
         context["page_title"] = "All Tasks"    
         context['guest_project'] = Project.objects.get(id=1)
         context['guest_view'] = Task.objects.filter(project=context['guest_project'])
@@ -98,7 +97,7 @@ class CreateTaskView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         form.fields['project'].queryset = (Project.objects.filter(person=self.request.user))
         return form
 
-    def form_valid(self, form, project):
+    def form_valid(self, form):
         form.instance.person = self.request.user
         return super(CreateTaskView, self).form_valid(form)
 
