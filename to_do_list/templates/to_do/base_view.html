@@ -31,7 +31,6 @@
             </div>
     
             <div class="navbar-item">
-
                     <a class="navbar-item" href="{% url 'list_view' %}">
                     Tasks
                 </a>
@@ -42,14 +41,12 @@
                     Add a Task
                 </a>
             </div>
-            {% if user.is_authenticated %}
 
             <div class="navbar-item">
                 <a class="navbar-item" href="{% url 'projects' %}">
                     Projects
                 </a>
             </div>
-            {%endif%}
         </div>
         {% if user.is_authenticated %}
         <div class="navbar-end">              

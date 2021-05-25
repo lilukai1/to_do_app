@@ -16,4 +16,5 @@ admin.site.register(Project)
 
 class Project(admin.StackedInline):
     model=Project
+    list_display = ("title", "person", "time_began", "time_ended")
 
