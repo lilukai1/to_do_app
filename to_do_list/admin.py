@@ -3,7 +3,7 @@ from to_do_list.models import Task, TaskRelationship, Project
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ("title", "person", "time_began", "time_ended", "priority", "completed")
+    list_display = ("title", 'project', 'project_id', "person", "time_began", "time_ended", "priority", "completed")
 
 admin.site.register(TaskRelationship)
 

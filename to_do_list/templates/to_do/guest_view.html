@@ -1,0 +1,47 @@
+{% extends "to_do/list_view.html" %}
+<br>
+{% block guest_view %}
+this is guest view
+<div class = "container"> 
+    <table class="table is-fullwidth is-hoverable">
+        {{pjs.title}}
+        <thead>
+    
+            <tr>
+                    <th></th>
+                    <th>Completed?</th>
+                    <th>Task</th>
+                    <th>Started On</th>
+                    <th>Finished On</th>
+                    <th></th>
+                    <th></th>
+            </tr>
+        </thead>    
+        <tbody>
+            {% for item in guest_view.children.select_related %}
+
+                <tr>
+                    <td>
+                    {% if item.completed %}
+                        <span class="icon has-text-success">
+                            <i class="fas fa-check-square"></i>
+                        </span>
+                    {% else %}
+                        <span class="icon has-text-danger">
+                            <i class="fas fa-ban"></i>
+                        </span>
+                    {%endif%}
+                    </td>
+                    <td><a href='{% url "task_detail" item.id %}' pk = {{item.id}}> {{ item.title }}</a></td>
+                    <td>{{ item.time_began}}</td>
+                    <td>{{ item.time_ended}}</td>
+                    <td> <a class="button is-success"  value="Edit Task" disabled=True>Edit Task</a>     </td>
+                    <td> <a class="button is-warning"  value="Delete Task" disabled=True>Delete Task</a> </td> 
+                {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    <br>
+    <br>
+           
+{%endblock guest_view %}

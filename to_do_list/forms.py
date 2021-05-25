@@ -16,12 +16,12 @@ class CompletedCheck(forms.ModelForm):
 class AddTaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['title', 'time_began', 'priority', 'project']
+        fields = ['title', 'description', 'time_began', 'priority', 'project']
 
     def __init__(self, *args, **kwargs):
+        super(AddTaskForm, self).__init__(*args, **kwargs)
         person = kwargs.pop('person')
         self.person = person
-        super(AddTaskForm, self).__init__(*args, **kwargs)
 
     def save(self, *args, **kwargs):
         self.instance.person = self.person
@@ -36,7 +36,7 @@ class AddTaskForm(forms.ModelForm):
 class AddProjectForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['title', 'time_began', 'description']
+        fields = ['title', 'description']
 
     def __init__(self, *args, **kwargs):
         person = kwargs.pop('person')
@@ -128,10 +128,10 @@ class RelationshipForm(forms.ModelForm):
         form_choices = ['before_task','after_task']
         fields=['target_task', 'relationship_status']
      
-class AddProjectForm(forms.ModelForm):
-    class Meta:
-        model = Project
-        fields = ['title', 'description',]
+# class AddProjectForm(forms.ModelForm):
+#     class Meta:
+#         model = Project
+#         fields = ['title', 'description',]
 
 
 # ProjectInlineFormSet =  inlineformset_factory(Task, TaskRelationship, fields=('project',),
