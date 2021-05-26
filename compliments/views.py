@@ -1,3 +1,4 @@
+from json import encoder
 from django.views import View
 import json
 from .models import Compliments
@@ -25,11 +26,11 @@ def compliment_list(request, format=None):
 
         for row in compliments:
             if row.category =='anytime':
-                anytime.append(f"{row.compliment} - {row.person} {row.created}")
+                anytime.append(f"{row.compliment} - {row.person} {row.created.strftime('%b,%d,%y')}")
             # serializer = ComplimentSerializer(compliments, many=True)
         time_key = {'anytime':anytime, 'morning':morning, 'afternoon':afternoon, 'evening':evening }
-        serializer = json.dumps(time_key, indent=3)
-        return JsonResponse(serializer, safe=False)
+        serializer = json.dumps(time_key, indent=3, ensure_ascii=False)
+        return JsonResponse(serializer, safe=False,)
 
     elif request.method == 'POST':
         serializer = ComplimentSerializer(data=request.data)
