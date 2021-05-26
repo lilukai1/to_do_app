@@ -11,15 +11,25 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
 
-@api_view(['GET', 'POST'])
+# @api_view(['GET', 'POST'])
 def compliment_list(request, format=None):
     """
     List all code compliments, or create a new compliment.
     """
     if request.method == 'GET':
         compliments = Compliments.objects.all()
-        serializer = ComplimentSerializer(compliments, many=True)
-        return Response(serializer.data)
+        anytime=[]
+        morning=[]
+        afternoon=[]
+        evening=[]
+
+        for row in compliments:
+            if row.category =='anytime':
+                anytime.append(f"{row.compliment} - {row.person} {row.created}")
+            # serializer = ComplimentSerializer(compliments, many=True)
+        time_key = {'anytime':anytime, 'morning':morning, 'afternoon':afternoon, 'evening':evening }
+        serializer = json.dumps(time_key, indent=3)
+        return JsonResponse(serializer, safe=False)
 
     elif request.method == 'POST':
         serializer = ComplimentSerializer(data=request.data)

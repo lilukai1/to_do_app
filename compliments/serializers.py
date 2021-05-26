@@ -4,7 +4,7 @@ from rest_framework import serializers
 from compliments.models import TIME_CHOICES, PERSON_CHOICES
 
 class ComplimentSerializer(serializers.Serializer):
-    category = serializers.IntegerField()
+    category = serializers.ChoiceField(choices=TIME_CHOICES, default='anytime',)
     compliment = serializers.CharField(required=True, max_length=75)
     person = serializers.CharField(max_length=10)
     created = serializers.DateTimeField(default=datetime.now())

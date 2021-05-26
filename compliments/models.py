@@ -2,20 +2,20 @@ from django.db import models
 import datetime
 
 from django.db.models.fields import CharField
+from django.db.models.query_utils import Q
 
-NATE = 1
-ANNIE = 0
+NATE = 'Nate'
+ANNIE = 'Annie'
 
 PERSON_CHOICES = [
     (NATE, "Nate"),
     (ANNIE, "Annie"),
 ]
 
-ANYTIME = 0
-MORNING = 1
-AFTERNOON = 2
-EVENING = 3
-
+ANYTIME = 'anytime'
+MORNING = 'morning'
+AFTERNOON = 'afternoon'
+EVENING = 'evening'
 TIME_CHOICES = [
     (ANYTIME, 'Anytime'),
     (MORNING, 'Morning'),
@@ -23,8 +23,17 @@ TIME_CHOICES = [
     (EVENING, 'Evening')
 ]
 
+class PostObject(models.Manager):
+    def get_queryset(self):
+        question = super().get_queryset().filter(category='anytime')
+        return question
+
+
 class Compliments(models.Model):
-    compliment = CharField(max_length=75)
+    compliment = models.CharField(max_length=75)
     person = models.CharField(max_length=10)
-    category = models.IntegerField(choices=TIME_CHOICES, default=ANYTIME)
+    category = models.CharField(choices=TIME_CHOICES, default="anytime", max_length=20)
     created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return(f"{self.compliment} - {self.person} {self.created}")

@@ -4,7 +4,9 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 
 urlpatterns = [
-    path('b', views.compliment_list)
+    path('', views.compliment_list),
+    path('list', views.compliment_list)
+
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
