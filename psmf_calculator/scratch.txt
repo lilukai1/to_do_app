@@ -5,3 +5,10 @@
 
 
 curl -X POST -H "Content-Type: application/json" http://127.0.0.1:8000/compliments/ -d "{\"person\":\"Annie\",\"compliment\":\"I sure love you\",\"category\":\"Anytime\"}"
+
+
+curl -X GET -H "Content-Type: application/json" http://127.0.0.1:8000/compliments/
+
+
+
+        item_data = []
