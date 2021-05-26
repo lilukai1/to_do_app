@@ -42,7 +42,7 @@ class ComplimentView(View):
                 item_data['evening'].append(compliment_string)
 
         data = {
-            'items': item_data,
+            'compliments': item_data,
         }
 
         return JsonResponse(data)
