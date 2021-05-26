@@ -41,8 +41,6 @@ class ComplimentView(View):
             elif item.category == 3:
                 item_data['evening'].append(compliment_string)
 
-        data = {
-            'compliments': item_data,
-        }
+        data = items_data
 
         return JsonResponse(data)
