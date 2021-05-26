@@ -29,17 +29,20 @@ class ComplimentView(View):
 
     def get(self, request):
         items = Compliments.objects.all()
-        items_data = []
+        item_data = {'anytime' : [], 'morning' : [], 'afternoon' : [], 'evening' : []}
         for item in items:
-            items_data.append({
-                'person': item.person,
-                'compliment': item.compliment,
-                'category': item.category,
-                # 'time':item.created,
-            })
+            compliment_string = f"{item.compliment} - {item.person}"
+            if item.category == 0:
+                item_data['anytime'].append(compliment_string)
+            elif item.category == 1:
+                item_data['morning'].append(compliment_string)           
+            elif item.category == 2:
+                item_data['afternoon'].append(compliment_string)            
+            elif item.category == 3:
+                item_data['evening'].append(compliment_string)
 
         data = {
-            'items': items_data,
+            'items': item_data,
         }
 
         return JsonResponse(data)
