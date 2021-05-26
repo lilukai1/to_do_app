@@ -5,7 +5,7 @@ from django.urls import include, path
 from to_do_list.views import (AllTasksList, DetailTaskView, base_view, ProjectDetailView,
                               RelationshipEditView, TaskDeleteView, EditTaskView,
                               toggle_checkmark, index_view, ProjectList, CreateTaskView,
-                              CreateProjectView, GuestListView, compliments_view)
+                              CreateProjectView, GuestListView)
 from . import views
 
 urlpatterns = [
@@ -25,5 +25,5 @@ urlpatterns = [
     path('to_do/projects/', ProjectList.as_view(template_name="to_do/project_list_view.html"), name ='projects'),
     path('to_do/projects/<int:pk>/', ProjectDetailView.as_view(template_name='to_do/project_view.html'), name ='project_detail'),
 
-    path('compliments/', compliments_view, name='compliments'),
+    # path('compliments/', compliments_view, name='compliments'),
 ]

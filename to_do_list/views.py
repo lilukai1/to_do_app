@@ -204,23 +204,3 @@ def project_view(request, pk):
     return render(request, 'to_do/project_view.html', context) 
 
 # @login_required(login_url="/accounts/login/")
-def compliments_view(TemplateView):
-    def get_context_data(self, **kwargs):
-        context=super(compliments_view, self).get_context_data(**kwargs)
-        context['myJSON'] = Compliments.objects.all()
-    return JsonResponse({
-    "anytime" :["I love how open and honest you have been with me! - Annie 5/25",
-],
-"evening" :[
-    "Thanks for no tv and no lights at bedtime",
-    "dont forget your pills lol"
-],
-"morning" : [
-    "Got a sweet plan for the day?",
-    "Love them kids for me.",
-    "Take them kids to the garden",
-],
-"afternoon": [
-    "Dont forget that I love you"
-]
-}, status=201)

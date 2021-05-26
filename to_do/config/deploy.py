@@ -146,6 +146,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'resume',  
     'psmf_calculator',
+    'compliments',
 
 
 ]

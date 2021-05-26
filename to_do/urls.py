@@ -25,5 +25,5 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls'), name='accounts'),
     path('', include('resume.urls')),
     path('psmf/', include('psmf_calculator.urls')),
-
+    path('compliments/', include('compliments.urls')),
 ]
