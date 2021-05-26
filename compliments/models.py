@@ -27,3 +27,4 @@ class Compliments(models.Model):
     compliment = CharField(max_length=75)
     person = models.CharField(max_length=10)
     category = models.IntegerField(choices=TIME_CHOICES, default=ANYTIME)
+    created = models.DateTimeField(auto_now_add=True)

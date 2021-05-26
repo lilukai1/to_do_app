@@ -1,9 +1,6 @@
-
-from django.contrib import admin
 from django.urls import include, path
-
-from compliments.views import ComplimentView
+from compliments import views
 
 urlpatterns = [
-    path('compliments.json', ComplimentView.as_view())
+    path('', views.compliment_list)
 ]
